@@ -1,21 +1,44 @@
 import React from 'react';
-import {Text,View} from 'react-native';
+import {Text, View} from 'react-native';
 
-import {styles}  from 'UniversoCF/components/styles/Styles';
+import {styles} from 'UniversoCF/components/styles/Styles';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
-const FillData = () =>{
-    const {currentUser}  = firebase.auth();
-    firebase.database().ref(`usuarios/`).orderByChild(`${currentUser.uid}`).on('value', snapshot => {
-      let items = snapshot.val()
-      object = Object.values(items).map(
-        (i) => {
-            return (<Text style={styles.subtitulo}>{i.nombre}</Text>) 
-        }
-      )
-    })
-}
+const FillData = () => {
+  // inicializa los datos del componente
+  const [items, setItems] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const {currentUser} = firebase.auth();
 
-export default FillData ;
+  // obtiene los datos de la base una sola vez
+  useEffect(() => {
+    if (!loaded) {
+      firebase
+        .database()
+        .ref(`usuarios/`)
+        .orderByChild(`${currentUser.uid}`)
+        .once('value', snapshot => {
+          let data = snapshot.val();
+          setItems(Object.values(data));
+        });
+      setLoaded(true);
+    }
+  });
+
+  // a modo de ejemplo, se utiliza 'Hola {item.apellido}'
+  return (
+    <View>
+      {items.map((item, i) => {
+        return (
+          <Text key={i} style={styles.subtitulo}>
+            Hola {item.apellido}
+          </Text>
+        );
+      })}
+    </View>
+  );
+};
+
+export default FillData;
