@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "153003123216",
+    "firebase_url": "https://universo-crossfit.firebaseio.com",
+    "project_id": "universo-crossfit",
+    "storage_bucket": "universo-crossfit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153003123216:android:5ad8efe356fc1ab0ac2095",
+        "android_client_info": {
+          "package_name": "com.universocf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153003123216-en89khvig7684pe6hp7g2a27d2184tq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX39V39uPJtQDHKUtslpyzfjt6nlaXams"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153003123216-en89khvig7684pe6hp7g2a27d2184tq6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153003123216:android:55dfdbc071195fb7ac2095",
+        "android_client_info": {
+          "package_name": "com.universocrossfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153003123216-en89khvig7684pe6hp7g2a27d2184tq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX39V39uPJtQDHKUtslpyzfjt6nlaXams"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153003123216-en89khvig7684pe6hp7g2a27d2184tq6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
