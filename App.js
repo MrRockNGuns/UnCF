@@ -2,69 +2,58 @@ import React from 'react';
 import {createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator} from 'react-navigation-stack'
-//import {createDrawerNavigator} from 'react-navigation-drawer';
 
-import LogIn    from './components/src/LogIn';
-import SignUp   from './components/src/SignUp';
-import Loading  from './components/src/Loading';
-import Main     from './components/src/Main';
-import Agenda   from './components/src/Agenda';
-import Horarios from './components/src/Horarios';
-import Configuracion from './components/src/Configuracion';
+import LogIn         from './components/src/LogIn';
+import SignUp        from './components/src/SignUp';
+import Loading       from './components/src/Loading';
+import Main          from 'UniversoCF/components/src/Main';
+import Agenda        from 'UniversoCF/components/src/Agenda';
+import Configuracion from 'UniversoCF/components/src/Configuracion';
 
-/*
-const MainNavigator = createStackNavigator(
-  {  
-    Login:   {screen: LogIn},
-    SignUp:  {screen: SignUp},
-    Loading: {screen: Loading},
-    Main:    {screen: Main},
-    Agenda:  {screen: Agenda},
-  },
-  {
-    initialRouteName: 'Loading',
-  },
+//Navegacion interna
+import EditarDatos   from 'UniversoCF/components/src/EditarDatos';
+
+const CnfMenu = createStackNavigator(
+    {
+        Editar:{screen: EditarDatos},
+    }
 );
 
-*/
 
-//const MainNavigator = createDrawerNavigator(
-/* Dejo estos por fuera del tab menu
-  
-    */
+// Primer Menu principal
 const MainNavigator = createBottomTabNavigator(
-
   { 
-    Login:   {screen: LogIn},
-    SignUp:  {screen: SignUp},
-    Loading: {screen: Loading},
     Main:    {screen: Main},
     Agenda:  {screen: Agenda},
     Config:   {screen: Configuracion}
   },
-  {
-      initialRouteName: 'Loading',
-      tabBarOptions : {
-        style: {
-          backgroundColor: 'black',
-        }
-      }
+  {    
+  tabBarOptions : {
+    style: {
+      backgroundColor: 'black',
+    }
+  }
   },
 );
 
+// Navegacion para LogIn se coloca MainNavigator para luego poder llamarLos objetos correctamente
 const HiddenNavigator = createStackNavigator(
   {
     Login:   {screen: LogIn},
     SignUp:  {screen: SignUp},
     Loading: {screen: Loading},
+    EditDatos: {screen: CnfMenu},
+    MainNavigator: {screen: MainNavigator},
   },
   {
     initialRouteName: 'Loading',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
   },
 );
 
-//const App = createStackNavigator({ MainNavigator }, { headerMode: "none" });
-const App = createAppContainer(MainNavigator);
-//const App = createAppContainer(MainNavigator);
+const App = createAppContainer(HiddenNavigator);
 
 export default App;

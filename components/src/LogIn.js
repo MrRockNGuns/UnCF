@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 //Importo los estilos Propios
 import {styles} from 'UniversoCF/components/styles/Styles';
@@ -17,8 +16,6 @@ export default class LogIn extends React.Component{
     state = {email: '', password: '', errorMensaje: null}    
     handleLogin = () => {
         const { email, password } = this.state
-        console.log('Email' + email)
-        console.log('Pass' + password)
         firebase
         .auth()
         .signInWithEmailAndPassword(email, password)

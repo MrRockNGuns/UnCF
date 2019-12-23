@@ -11,28 +11,21 @@ import { firebase } from '@react-native-firebase/auth';
 
 export default class Loading extends React.Component{
   static navigationOptions = {        
-         tabBarVisible: false ,
-    };
-  state = {email: '', password: '', errorMensaje: null}    
+    tabBarVisible: false ,
+    headerStyle: {
+      backgroundColor: 'black',
+      shadowOpacity: 0,
+      elevation: 0,
+    },
+  };
+
+  state = {email: '', password: '', errorMensaje: null}
   componentDidMount = async () => {
     const {navigate} = this.props.navigation;
-    await firebase.auth().onAuthStateChanged(email => {      
-       this.props.navigation.navigate(email ? 'Main' : 'Login') 
-     /* 
-      if (user === null ){
-        console.log("Entro al Auth")
-          navigate('Login')
-      }
-      else{
-        console.log("Entro al Else")
-          navigate('Main')
-      }
-    */
+    await firebase.auth().onAuthStateChanged(email => {
+       this.props.navigation.navigate(email ? 'Main' : 'Login')
     })
-    
   }
-  
-    
   render(){
     this.componentDidMount();
     return( 
@@ -41,11 +34,10 @@ export default class Loading extends React.Component{
             style={{width: 100, height: 100}}
             source={require('UniversoCF/components/img/UniversoLogoU.png')}
         />
-        <Text style={styles.subtitulo} >Cargando</Text>
+        <Text style={styles.subtitulo}>Cargando</Text>
         <ActivityIndicator size="large" />
           
       </View>
     );
-    
   }
 }

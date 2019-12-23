@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {Text, View} from 'react-native';
 
 import {styles} from 'UniversoCF/components/styles/Styles';
@@ -17,10 +17,11 @@ const FillData = () => {
     if (!loaded) {
       firebase
         .database()
-        .ref(`usuarios/`)
+        .ref(`/usuarios/`)
         .orderByChild(`${currentUser.uid}`)
         .once('value', snapshot => {
           let data = snapshot.val();
+          console.log(data);
           setItems(Object.values(data));
         });
       setLoaded(true);
@@ -32,8 +33,8 @@ const FillData = () => {
     <View>
       {items.map((item, i) => {
         return (
-          <Text key={i} style={styles.subtitulo}>
-            Hola {item.apellido}
+          <Text key={i} style={styles.texto}>
+             {item.nombre} {item.apellido}
           </Text>
         );
       })}

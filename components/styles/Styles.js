@@ -10,11 +10,16 @@ const styles = StyleSheet.create({
     titulo: {
       color: "white",
       fontSize: 40,
-      marginBottom: 55,
+      marginBottom: 20,
     },
     subtitulo: {
       color: "white",
       fontSize: 25,
+      marginBottom: 35,
+    },
+    texto: {
+      color: "white",
+      fontSize: 20,
       marginBottom: 35,
     },
     logintxt:{

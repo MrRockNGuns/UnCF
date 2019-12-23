@@ -15,18 +15,6 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 
-async function Agregar(state){
-    const { fecha, hora, usuario } = this.state
-    console.log(fecha,hora,usuario);
-    const referencia = firebase.database().ref(`/reservas`);
-    await referencia.set({
-        //Valores a Agregar
-        fecha: fecha,
-        hora: hora,
-        usuario: usuario,
-    });
-}
-
 // Defecto Español
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -46,7 +34,6 @@ export default class Agenda extends React.Component{
         const {currentUser}  = firebase.auth()
         const referencia = firebase.database().ref(`/reservas/${currentUser.uid}`);
         const Id = firebase.database().ref(`/reservas/`).push()
-        
         
         console.log('Id ' + Id.key)
         console.log('Uid ' + currentUser.uid)
@@ -114,8 +101,8 @@ export default class Agenda extends React.Component{
                         this.setState({hora: itemValue})
                     }
                 >                   
-                    <Picker.Item label="07:00 - 08:00" value="7:00 - 08:00" />
-                    <Picker.Item label="09:00 10:00" value="9:00 10:00" />
+                    <Picker.Item label="07:00 08:00" value="07:00 08:00" />
+                    <Picker.Item label="09:00 10:00" value="09:00 10:00" />
                     <Picker.Item label="12:20 13:20" value="12:20 13:20" />
                     <Picker.Item label="17:00 18:00" value="17:00 18:00" />
                     <Picker.Item label="18:00 19:00" value="18:00 19:00" />
@@ -124,6 +111,14 @@ export default class Agenda extends React.Component{
                     <Picker.Item label="21:00 22:00" value="21:00 22:00" />
                 </Picker>
 
+                <TouchableOpacity
+                    style={styles.BtnStyleOp}
+                    onPress = { () => {
+                        }
+                    }
+                >
+                    <Text style={styles.textBtnStyleOp}>Rutinas para el dia</Text>
+                </TouchableOpacity>               
                 
                 <TouchableOpacity
                     style={styles.BtnStyle}
@@ -139,12 +134,3 @@ export default class Agenda extends React.Component{
         );
     }
 }
-/**
-  <TextInput
-                    style={styles.Input} 
-                    placeholder="Hora"
-                    placeholderTextColor="white"
-                    name="Hora"
-                    onChangeText={hora => this.setState({ hora })}
-                    value={this.state.hora} 
-                /> */
