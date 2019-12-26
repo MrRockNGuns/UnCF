@@ -58,8 +58,7 @@ export default class Agenda extends React.Component{
                     hideArrows={false}
                     onDayPress={
                         (day) => {                           
-                            this.state.fecha = (day.dateString),                            
-                            console.log(this.state.fecha)
+                            this.state.fecha = (day.dateString)
                         }
                     }
                     markedDates={
@@ -67,6 +66,7 @@ export default class Agenda extends React.Component{
                             [this.state.fecha]: { selected: true } 
                         }
                     }
+                    onChangeText={fecha => this.setState({ fecha })}
                     theme={
                         {
                             calendarBackground: 'black',
@@ -100,6 +100,7 @@ export default class Agenda extends React.Component{
                     onValueChange={(itemValue, itemIndex) =>
                         this.setState({hora: itemValue})
                     }
+                    
                 >                   
                     <Picker.Item label="07:00 08:00" value="07:00 08:00" />
                     <Picker.Item label="09:00 10:00" value="09:00 10:00" />

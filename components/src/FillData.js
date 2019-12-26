@@ -11,35 +11,44 @@ const FillData = () => {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const {currentUser} = firebase.auth();
-
+  const [nombre, setNombre] = useState()
+  const [apellido, setApellido] = useState()
+  
   // obtiene los datos de la base una sola vez
   useEffect(() => {
     if (!loaded) {
       firebase
         .database()
-        .ref(`/usuarios/`)
+        .ref(`/usuarios/${currentUser.uid}`)
         .orderByChild(`${currentUser.uid}`)
         .once('value', snapshot => {
           let data = snapshot.val();
-          console.log(data);
-          setItems(Object.values(data));
+          setNombre(data.nombre);
+          setApellido(data.apellido);
+//          setItems(Object.values(data));
         });
       setLoaded(true);
     }
   });
-
+  
   // a modo de ejemplo, se utiliza 'Hola {item.apellido}'
   return (
     <View>
-      {items.map((item, i) => {
-        return (
-          <Text key={i} style={styles.texto}>
-             {item.nombre} {item.apellido}
-          </Text>
-        );
-      })}
+      <Text style={styles.subtitulo}>{nombre + ' ' + apellido} </Text>
     </View>
   );
 };
 
 export default FillData;
+
+
+/**
+  <Text key={i} style={styles.texto}>
+             {item.nombre} {item.apellido}
+          </Text>
+          {items.map((item, i) => {
+        return (
+          <Text>Un Texto de Prueba</Text>
+        );
+      })}
+ */
