@@ -4,8 +4,6 @@ import {
     Text,
     Picker,
     TouchableOpacity,
-    FlatList,
-    Button,
 } from 'react-native';
 
 import {styles}  from 'UniversoCF/components/styles/Styles';
@@ -58,7 +56,8 @@ export default class Agenda extends React.Component{
                     hideArrows={false}
                     onDayPress={
                         (day) => {                           
-                            this.state.fecha = (day.dateString)
+                            this.setState({fecha: day.dateString})
+                            //this.state.fecha = (day.dateString)
                         }
                     }
                     markedDates={
@@ -95,12 +94,11 @@ export default class Agenda extends React.Component{
                     } 
                 />
                 <Picker
-                    selectedValue={this.state.language}
+                    selectedValue={this.state.hora}
                     style={styles.pickerStyle}
                     onValueChange={(itemValue, itemIndex) =>
                         this.setState({hora: itemValue})
-                    }
-                    
+                      }
                 >                   
                     <Picker.Item label="07:00 08:00" value="07:00 08:00" />
                     <Picker.Item label="09:00 10:00" value="09:00 10:00" />

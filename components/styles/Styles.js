@@ -95,6 +95,9 @@ const styles = StyleSheet.create({
       borderColor: "white",
       color: "white",
     },
+    iconWhite:{
+      color: "white",
+    },
 
   });
 

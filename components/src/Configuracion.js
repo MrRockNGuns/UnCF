@@ -11,6 +11,7 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 
+
 export default class Configuracion extends React.Component{ 
     
     signOutUser = async () => {
@@ -32,7 +33,7 @@ export default class Configuracion extends React.Component{
                 <TouchableOpacity
                     style={styles.BtnStyle}
                     onPress = { () => {
-                        ()=> this.props.navigation.navigate('EditDatos')
+                        ()=> this.props.navigation.navigate('Editar')
                     }}
                 >
                     <Text style={styles.textBtnStyle}>Editar Datos</Text>

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Text, ActivityIndicator, View} from 'react-native';
 
 import {styles} from 'UniversoCF/components/styles/Styles';
 import firebase from '@react-native-firebase/app';
@@ -32,23 +32,20 @@ const FillData = () => {
   });
   
   // a modo de ejemplo, se utiliza 'Hola {item.apellido}'
-  return (
-    <View>
-      <Text style={styles.subtitulo}>{nombre + ' ' + apellido} </Text>
-    </View>
-  );
+  if (!loaded){
+    return(
+      <View>
+        <Text style={styles.subtitulo}>Cargando</Text>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  else{
+    return (      
+        <Text style={styles.subtitulo}>{nombre + ' ' + apellido} </Text>
+    );
+  }
+  
 };
 
 export default FillData;
-
-
-/**
-  <Text key={i} style={styles.texto}>
-             {item.nombre} {item.apellido}
-          </Text>
-          {items.map((item, i) => {
-        return (
-          <Text>Un Texto de Prueba</Text>
-        );
-      })}
- */

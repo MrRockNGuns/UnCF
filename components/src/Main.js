@@ -4,11 +4,11 @@ import {
     Text,
 } from 'react-native';
 
-import FillData from 'UniversoCF/components/src/FillData';
+
 
 import {styles} from 'UniversoCF/components/styles/Styles';
 import { firebase } from '@react-native-firebase/auth';
-
+import FillData     from 'UniversoCF/components/src/FillData'; 
 
 export default class Main extends React.Component{
     componentDidMount = async () => {

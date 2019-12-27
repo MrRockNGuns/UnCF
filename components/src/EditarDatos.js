@@ -6,7 +6,7 @@ import {styles} from 'UniversoCF/components/styles/Styles';
 export default class EditarDatos extends React.Component{
     render(){
         return(
-            <View>
+            <View style={styles.fondo}>
                 <Text style={styles.titulo}>Editar Datos</Text>
             </View>
         );
