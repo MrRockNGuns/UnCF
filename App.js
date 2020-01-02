@@ -1,5 +1,5 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator} from 'react-navigation-stack';
 import { Icon } from 'react-native-elements'
@@ -10,17 +10,10 @@ import Loading       from './components/src/Loading';
 import Main          from 'UniversoCF/components/src/Main';
 import Agenda        from 'UniversoCF/components/src/Agenda';
 import Configuracion from 'UniversoCF/components/src/Configuracion';
-import {styles} from 'UniversoCF/components/styles/Styles';
 
 
 //Navegacion interna
 import EditarDatos   from 'UniversoCF/components/src/EditarDatos';
-
-const CnfMenu = createStackNavigator(
-    {
-        Editar:{screen: EditarDatos},
-    }
-);
 
 
 // Primer Menu principal
@@ -49,8 +42,8 @@ const MainNavigator = createBottomTabNavigator(
           <Icon color="white" name="cog" type="font-awesome" />
         )
       }
+      
     },
-    
   },
   {    
   tabBarOptions : {
@@ -62,13 +55,13 @@ const MainNavigator = createBottomTabNavigator(
 );
 
 // Navegacion para LogIn se coloca MainNavigator para luego poder llamarLos objetos correctamente
-const HiddenNavigator = createStackNavigator(
+const HiddenNavigator = createSwitchNavigator(
   {
     Login:   {screen: LogIn},
     SignUp:  {screen: SignUp},
-    Loading: {screen: Loading},
+    Loading: {screen: Loading},    
     MainNavigator: {screen: MainNavigator},
-    EditarDatos: {screen: CnfMenu},
+    EditarDatos: {screen:EditarDatos},
   },
   {
     initialRouteName: 'Loading',

@@ -30,16 +30,13 @@ export default class Agenda extends React.Component{
     agendarClase = () => {
         const { fecha, hora, usuario } = this.state
         const {currentUser}  = firebase.auth()
-        const referencia = firebase.database().ref(`/reservas/${currentUser.uid}`);
-        const Id = firebase.database().ref(`/reservas/`).push()
+        const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
+        const Id = currentUser.uid
         
-        console.log('Id ' + Id.key)
+        console.log('Id ' + Id)
         console.log('Uid ' + currentUser.uid)
 
-        referencia.child(Id.key).set({
-        
-            fecha: fecha,
-            hora: hora,
+        referencia.child(Id).set({
             usuario: currentUser.email,
         })
         

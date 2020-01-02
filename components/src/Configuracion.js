@@ -10,10 +10,18 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
+import ModalView from 'UniversoCF/components/src/Modal';
 
 
 export default class Configuracion extends React.Component{ 
     
+    displayModal = () => {
+        console.log('quiero desplegar modal')
+        return(
+            <ModalView/>
+        )
+    }
+
     signOutUser = async () => {
         try {
             await firebase.auth().signOut();
@@ -33,7 +41,8 @@ export default class Configuracion extends React.Component{
                 <TouchableOpacity
                     style={styles.BtnStyle}
                     onPress = { () => {
-                        ()=> this.props.navigation.navigate('Editar')
+                        this.props.navigation.navigate('EditarDatos');
+                        //this.displayModal()
                     }}
                 >
                     <Text style={styles.textBtnStyle}>Editar Datos</Text>
