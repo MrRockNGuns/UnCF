@@ -43,8 +43,8 @@ export default class LogIn extends React.Component{
             const login = await firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then( () => this.props.navigation.navigate('Main',email))
-            .catch(e => this.setState({errorMensaje: e.message})  )  
+            .then(result  => this.props.navigation.navigate(result ? 'Main' : errorMensaje = 'Usuario No verificado'))
+            .catch(e => this.setState({errorMensaje: e.message}))  
         }       
     }
 

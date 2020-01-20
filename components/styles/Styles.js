@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
       fontSize: 20,
       marginBottom: 35,
     },
+    textochico: {
+      color: "white",
+      fontSize: 16,
+      alignContent: 'stretch'
+    },
     logintxt:{
       color: "white",
       fontSize: 32,

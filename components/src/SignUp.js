@@ -30,11 +30,25 @@ export default class SignUp extends React.Component{
     errorMensaje: null
   }
 
-  handleSignUp = async () => {
+  VerificationLink = async () => {
     const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod} = this.state;
+    console.log(email);
+    
+  }
+
+  handleSignUp = async () => {
+    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje} = this.state;
     if (pass === passv){
       try {
-        await auth().createUserWithEmailAndPassword(email, pass);
+        await auth().createUserWithEmailAndPassword(email, pass)    
+        
+        firebase.auth().currentUser.sendEmailVerification().then(function(){
+          console.log('Email Enviado')
+        },
+        function(error){
+          console.log('Hubo un error')
+        }
+        )
         //si es exitoso logeo
         const {currentUser}  = firebase.auth()
         const referencia = firebase.database().ref(`/usuarios/`);

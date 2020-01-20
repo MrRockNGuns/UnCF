@@ -21,7 +21,7 @@ const MainNavigator = createBottomTabNavigator(
   { 
     Main:{screen: Main,
             navigationOptions: {
-              tabBarLabel: "Principal",
+              tabBarLabel: "Agenda",
               tabBarIcon: () => (
                 <Icon color="white" name="home" type="font-awesome" />
               )

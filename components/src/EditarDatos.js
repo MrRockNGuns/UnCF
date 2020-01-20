@@ -5,8 +5,7 @@ import DatosUsuario from './loaders/DatosUsuario';
 export default class EditarDatos extends React.Component{
 
     render(){
-        return(
-            
+        return(  
             <View style={styles.fondo}>
                 <Text style={styles.titulo}>Editar Usuario</Text>
                 <DatosUsuario/>

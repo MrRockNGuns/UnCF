@@ -12,8 +12,8 @@ import FillData     from 'UniversoCF/components/src/FillData';
 
 export default class Main extends React.Component{
     componentDidMount = async () => {
-        await firebase.auth().onAuthStateChanged(email => {      
-            this.props.navigation.navigate(email ? 'Main' : 'Login') 
+        await firebase.auth().onAuthStateChanged(usuario => {      
+            this.props.navigation.navigate(usuario.emailVerified ? 'Main' : 'Login')
         });
     }
   render(){
