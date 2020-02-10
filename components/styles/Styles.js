@@ -7,6 +7,23 @@ const styles = StyleSheet.create({
       alignItems:"center",
       backgroundColor: "black",
     },
+    fondoscroll:{
+      flex: 1,
+      alignItems:"center",
+      backgroundColor: "black",
+      justifyContent: "center",
+    },
+    fondoregistro:{
+      flex: 0,
+      alignItems:"center",
+      
+    },
+    fondoOk:{
+      flex: 1,
+      justifyContent: "center",
+      alignItems:"center",
+      backgroundColor: "green",
+    },
     titulo: {
       color: "white",
       fontSize: 40,
@@ -19,6 +36,16 @@ const styles = StyleSheet.create({
     },
     texto: {
       color: "white",
+      fontSize: 20,
+      marginBottom: 35,
+    },
+    textoError: {
+      color: "red",
+      fontSize: 20,
+      marginBottom: 35,
+    },
+    textoSuccess: {
+      color: "green",
       fontSize: 20,
       marginBottom: 35,
     },

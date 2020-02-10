@@ -13,7 +13,8 @@ import Configuracion from 'UniversoCF/components/src/Configuracion';
 
 
 //Navegacion interna
-import EditarDatos   from 'UniversoCF/components/src/EditarDatos';
+import EditarDatos    from 'UniversoCF/components/src/EditarDatos';
+import CrearCategoria from 'UniversoCF/components/src/CrearCategoria';
 
 
 // Primer Menu principal
@@ -49,28 +50,64 @@ const MainNavigator = createBottomTabNavigator(
   tabBarOptions : {
     style: {
       backgroundColor: 'black',
-    }
+    },
   }
   },
 );
 
-// Navegacion para LogIn se coloca MainNavigator para luego poder llamarLos objetos correctamente
-const HiddenNavigator = createSwitchNavigator(
+const ConfiguracionOpc = createStackNavigator(
+  {
+    EditarDatos: {screen:EditarDatos},
+    CrearCategoria: {screen: CrearCategoria},
+  },
+  {
+    initialRouteName: 'EditarDatos',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'black',
+      },
+      headerTintColor: '#fff',
+    }
+  },
+)
+
+const LoginOpc = createStackNavigator(
   {
     Login:   {screen: LogIn},
     SignUp:  {screen: SignUp},
     Loading: {screen: Loading},    
-    MainNavigator: {screen: MainNavigator},
-    EditarDatos: {screen:EditarDatos},
   },
   {
     initialRouteName: 'Loading',
-    headerMode: 'none',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'black',
+      },
+      headerTintColor: '#fff',
+    }
+  },
+)
+
+// Navegacion para LogIn se coloca MainNavigator para luego poder llamarLos objetos correctamente
+const HiddenNavigator = createSwitchNavigator(
+  {
+    LoginOpc:       {screen: LoginOpc},
+    MainNavigator: {screen: MainNavigator},
+    ConfiguracionOpc : {screen: ConfiguracionOpc}
+  },
+  {
+    initialRouteName: 'LoginOpc',
+    headerMode: 'screen',
+    headerStyle: {
+      backgroundColor: 'black',
+    },
     navigationOptions: {
-        headerVisible: false,
+        headerVisible: true,
     }
   },
 );
+
+
 
 const App = createAppContainer(HiddenNavigator);
 

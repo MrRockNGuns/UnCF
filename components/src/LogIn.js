@@ -12,9 +12,9 @@ import { firebase } from '@react-native-firebase/auth';
 
  
 export default class LogIn extends React.Component{
-    static navigationOptions = {        
-         tabBarVisible: false ,
-    };
+    static navigationOptions = {
+        header: null,
+    }
     state = {email: '', password: '', errorMensaje: null}    
 
     DisplayError =  () => {

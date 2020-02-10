@@ -27,7 +27,6 @@ export default class Loading extends React.Component{
     })
   }
   render(){
-    this.componentDidMount();
     return( 
       <View style={styles.fondo}>
         <Image
@@ -36,7 +35,6 @@ export default class Loading extends React.Component{
         />
         <Text style={styles.subtitulo}>Cargando</Text>
         <ActivityIndicator size="large" />
-          
       </View>
     );
   }

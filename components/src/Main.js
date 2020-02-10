@@ -4,15 +4,14 @@ import {
     Text,
 } from 'react-native';
 
-
-
 import {styles} from 'UniversoCF/components/styles/Styles';
 import { firebase } from '@react-native-firebase/auth';
-import FillData     from 'UniversoCF/components/src/FillData'; 
+import FillData  from 'UniversoCF/components/src/loaders/FillData'; 
 
 export default class Main extends React.Component{
-    componentDidMount = async () => {
+    shouldComponentUpdate = async () => {
         await firebase.auth().onAuthStateChanged(usuario => {      
+            console.log('Verificando')
             this.props.navigation.navigate(usuario.emailVerified ? 'Main' : 'Login')
         });
     }
@@ -23,7 +22,7 @@ export default class Main extends React.Component{
                 <Text style={styles.titulo}>
                     Bienvenido 
                 </Text>
-                <FillData/>
+                <FillData />
                 <Text style={styles.subtitulo}>
                     Novedades
                 </Text>

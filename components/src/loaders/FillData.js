@@ -25,14 +25,13 @@ const FillData = () => {
           let data = snapshot.val();
           setNombre(data.nombre);
           setApellido(data.apellido);
-//          setItems(Object.values(data));
         });
       setLoaded(true);
     }
   });
   
   // a modo de ejemplo, se utiliza 'Hola {item.apellido}'
-  if (!loaded){
+  if (!loaded || nombre === 'undefined'){
     return(
       <View>
         <Text style={styles.subtitulo}>Cargando</Text>

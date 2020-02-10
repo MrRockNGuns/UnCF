@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   Picker,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 
 import {styles} from 'UniversoCF/components/styles/Styles';
@@ -14,6 +16,9 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 export default class SignUp extends React.Component{
+  static navigationOptions = {
+    title: 'Registrarse',
+  };
   
   state = {
     email: '',
@@ -30,54 +35,65 @@ export default class SignUp extends React.Component{
     errorMensaje: null
   }
 
-  VerificationLink = async () => {
-    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod} = this.state;
-    console.log(email);
-    
+  showError = () =>{
+    const {errorMensaje} = this.state;
+        return(
+            <Text style={styles.textoError}>{errorMensaje}</Text>
+        );
   }
-
   handleSignUp = async () => {
     const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje} = this.state;
     if (pass === passv){
-      try {
-        await auth().createUserWithEmailAndPassword(email, pass)    
-        
-        firebase.auth().currentUser.sendEmailVerification().then(function(){
-          console.log('Email Enviado')
-        },
-        function(error){
-          console.log('Hubo un error')
-        }
-        )
-        //si es exitoso logeo
-        const {currentUser}  = firebase.auth()
-        const referencia = firebase.database().ref(`/usuarios/`);
+      if (cod === '22312'){
+        try {
+          await auth().createUserWithEmailAndPassword(email, pass)    
+          
+          firebase.auth().currentUser.sendEmailVerification().then(function(){
+              //console.log('Email Enviado')
+            },
+            function(error){
+              //console.log('Hubo un error')
+            }
+          )
+          //si es exitoso Grabo
+          const {currentUser}  = firebase.auth()
+          const referencia = firebase.database().ref(`/usuarios/`);
 
-        referencia.child(currentUser.uid).set({
-          email: currentUser.email,
-          nombre: nombre,
-          apellido: apellido,
-          tel: tel,
-          nivel: nivel,
-          salud: salud,
-          sexo: sexo,
-          obs: obs,
-          cod: cod
-        })
-      } catch (e) {
-        console.error(e.message);
+          referencia.child(currentUser.uid).set({
+            email: currentUser.email,
+            nombre: nombre,
+            apellido: apellido,
+            tel: tel,
+            nivel: nivel,
+            salud: salud,
+            sexo: sexo,
+            obs: obs,
+            cod: cod
+          })
+          //Emitir Mensaje
+        } catch (e) {
+          console.error(e.message);
+          this.setState({errorMensaje: e.message})
+        }
+      }
+      else{
+        console.log('Codigo no Valido');  
+        this.setState({errorMensaje: 'Código no Valido'})
       }
     }
     else{
       console.log('Password Distintas');
-    }
-      
+      this.setState({errorMensaje: 'Password Distintas'})
+    } 
   }
   render(){
     return(
-        <View
-          style={styles.fondo}
-        >
+          <SafeAreaView style={styles.fondoscroll}> 
+          {
+            this.state.errorMensaje &&
+            this.showError()
+          }
+          <ScrollView >
           <Text style={styles.subtitulo}>Completa los Campos</Text>
           <TextInput 
             style={styles.Input} 
@@ -100,7 +116,8 @@ export default class SignUp extends React.Component{
             onValueChange={(itemValue, itemIndex) =>
               this.setState({sexo: itemValue})
             }
-          >                   
+          > 
+            <Picker.Item  key="0" label="Indique genero.." value={0} />
             <Picker.Item  key="1" label="Masculino" value="M" />
             <Picker.Item  key="2" label="Femenino" value="F"  />
           </Picker>
@@ -164,7 +181,8 @@ export default class SignUp extends React.Component{
           >
               <Text style={styles.textBtnStyle}>Registrate</Text>
           </TouchableOpacity>
-        </View>
+          </ScrollView>
+          </SafeAreaView>
     )
   }
 }

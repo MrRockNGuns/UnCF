@@ -25,7 +25,7 @@ LocaleConfig.defaultLocale = 'es';
 
 
 export default class Agenda extends React.Component{
-    state = {fecha: '', hora: '',usuario: '',errorMensaje: null} 
+    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null} 
     
     agendarClase = () => {
         const { fecha, hora, usuario } = this.state
@@ -33,18 +33,48 @@ export default class Agenda extends React.Component{
         const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
         const Id = currentUser.uid
         
-        console.log('Id ' + Id)
-        console.log('Uid ' + currentUser.uid)
-
-        referencia.child(Id).set({
-            usuario: currentUser.email,
-        })
+        // console.log('Id ' + Id)
+        // console.log('Uid ' + currentUser.uid)
+        // console.log('hora ' + hora)
         
+        if(hora == 0 || hora == null){
+            this.setState({errorMensaje: 'Debe indicar una Hora.'})
+        }
+        else{
+            referencia.child(Id).set({
+                usuario: currentUser.email,
+                
+            })
+            this.setState({successMensaje: 'Agendado Correctamente'})
+        }
         //No hago nada
     }
+
+    showError =() =>{
+        const {errorMensaje} = this.state;
+        return(
+            <Text style={styles.textoError}>{errorMensaje}</Text>
+        );
+    }
+
+    showSuccess = () =>{
+        const {successMensaje} = this.state;
+        // console.log(successMensaje)
+        return(
+            <Text style={styles.textoSuccess}>{successMensaje}</Text>
+        )
+    }
+
     render(){
         return(
             <View style={styles.fondo} >
+                {this.state.errorMensaje &&
+                    this.showError()
+                }
+                {this.state.successMensaje &&
+                    this.showSuccess()
+                }
+
                 <Text style={styles.titulo}>
                     Agenda
                 </Text>
@@ -65,28 +95,28 @@ export default class Agenda extends React.Component{
                     onChangeText={fecha => this.setState({ fecha })}
                     theme={
                         {
-                            calendarBackground: 'black',
-                            textSectionTitleColor: '#64b6ac',
+                            calendarBackground:         'black',
+                            textSectionTitleColor:      '#64b6ac',
                             selectedDayBackgroundColor: '#00adf5',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
-                            dayTextColor: '#2d4150',
-                            textDisabledColor: '#d9e1e8',
-                            dotColor: '#00adf5',
-                            selectedDotColor: '#ffffff',
-                            arrowColor: '#738290',
-                            monthTextColor: '#23b5d3',
-                            indicatorColor: 'blue',
-                            textDayFontFamily: 'monospace',
-                            textMonthFontFamily: 'monospace',
-                            textDayHeaderFontFamily: 'monospace',
-                            textDayFontWeight: '300',
-                            textMonthFontWeight: 'bold',
-                            textDayHeaderFontWeight: '300',
-                            textDayFontSize: 16,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 16,
-                            agendaKnobColor: 'blue'
+                            selectedDayTextColor:       '#ffffff',
+                            todayTextColor:             '#00adf5',
+                            dayTextColor:               '#2d4150',
+                            textDisabledColor:          '#d9e1e8',
+                            dotColor:                   '#00adf5',
+                            selectedDotColor:           '#ffffff',
+                            arrowColor:                 '#738290',
+                            monthTextColor:             '#23b5d3',
+                            indicatorColor:             'blue',
+                            textDayFontFamily:          'monospace',
+                            textMonthFontFamily:        'monospace',
+                            textDayHeaderFontFamily:    'monospace',
+                            textDayFontWeight:          '300',
+                            textMonthFontWeight:        'bold',
+                            textDayHeaderFontWeight:    '300',
+                            textDayFontSize:            16,
+                            textMonthFontSize:          16,
+                            textDayHeaderFontSize:      16,
+                            agendaKnobColor:            'blue'
                         }
                     } 
                 />
@@ -97,6 +127,7 @@ export default class Agenda extends React.Component{
                         this.setState({hora: itemValue})
                       }
                 >                   
+                    <Picker.Item label='Eliga una hora...' value={0} />
                     <Picker.Item label="07:00 08:00" value="07:00 08:00" />
                     <Picker.Item label="09:00 10:00" value="09:00 10:00" />
                     <Picker.Item label="12:20 13:20" value="12:20 13:20" />
@@ -108,10 +139,11 @@ export default class Agenda extends React.Component{
                 </Picker>
 
                 <TouchableOpacity
-                    style={styles.BtnStyleOp}
-                    onPress = { () => {
-                        }
-                    }
+                style={styles.BtnStyleOp}
+                onPress = { () => {
+                        
+                }
+                }
                 >
                     <Text style={styles.textBtnStyleOp}>Rutinas para el dia</Text>
                 </TouchableOpacity>               
