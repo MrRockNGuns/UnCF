@@ -19,11 +19,11 @@ export default class Loading extends React.Component{
     },
   };
 
-  state = {email: '', password: '', errorMensaje: null}
+  // state = {email: '', password: '', errorMensaje: null}
   componentDidMount = async () => {
-    const {navigate} = this.props.navigation;
-    await firebase.auth().onAuthStateChanged(email => {
-       this.props.navigation.navigate(email ? 'Main' : 'Login')
+    // const {navigate} = this.props.navigation;
+    await firebase.auth().onAuthStateChanged(usuario => {
+       this.props.navigation.navigate(usuario.emailVerified ? 'Main' : 'Login')
     })
   }
   render(){

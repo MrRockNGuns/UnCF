@@ -7,9 +7,10 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 // obtiene los datos de la base una sola vez
-    
+
 
 const EditarDatos = () => {
+    
     const [nombre, setNombre] = useState();
     const [apellido, setApellido] = useState();
     const [cel, setCel] = useState();
@@ -23,7 +24,7 @@ const EditarDatos = () => {
     const {currentUser} = firebase.auth();
     const [error, setError] = useState(null);
     const [scss, setScss] = useState(null);
-
+    
     useEffect(() => {
         if (!loaded) {
           firebase
@@ -95,14 +96,14 @@ const EditarDatos = () => {
             <UsuarioDatos  datatype={sexo} onChangeText={sexo => setSexo({sexo}),console.log('Sexo: ' + sexo)}/>
             <UsuarioDatos  datatype={salud}/>
             <TouchableOpacity
-                    style={styles.BtnStyle}
-                    onPress = { () => {
-                        EditarUsuario()
-                        }
+                style={styles.BtnStyle}
+                onPress = { () => {
+                    EditarUsuario()
                     }
-                >
-                    <Text style={styles.textBtnStyle}>Agendar Clase</Text>
-                </TouchableOpacity>
+                }
+            >
+                <Text style={styles.textBtnStyle}>Editar Datos</Text>
+            </TouchableOpacity>
         </View>
     )
 }

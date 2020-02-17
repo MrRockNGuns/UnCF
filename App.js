@@ -6,11 +6,9 @@ import { Icon } from 'react-native-elements'
 
 import LogIn         from './components/src/LogIn';
 import SignUp        from './components/src/SignUp';
-import Loading       from './components/src/Loading';
 import Main          from 'UniversoCF/components/src/Main';
 import Agenda        from 'UniversoCF/components/src/Agenda';
 import Configuracion from 'UniversoCF/components/src/Configuracion';
-
 
 //Navegacion interna
 import EditarDatos    from 'UniversoCF/components/src/EditarDatos';
@@ -65,6 +63,7 @@ const ConfiguracionOpc = createStackNavigator(
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: 'black',
+        headerVisible: true,
       },
       headerTintColor: '#fff',
     }
@@ -75,10 +74,9 @@ const LoginOpc = createStackNavigator(
   {
     Login:   {screen: LogIn},
     SignUp:  {screen: SignUp},
-    Loading: {screen: Loading},    
   },
   {
-    initialRouteName: 'Loading',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: 'black',
@@ -106,8 +104,6 @@ const HiddenNavigator = createSwitchNavigator(
     }
   },
 );
-
-
 
 const App = createAppContainer(HiddenNavigator);
 

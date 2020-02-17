@@ -8,15 +8,46 @@ const styles = StyleSheet.create({
       backgroundColor: "black",
     },
     fondoscroll:{
-      flex: 1,
-      alignItems:"center",
       backgroundColor: "black",
-      justifyContent: "center",
-    },
-    fondoregistro:{
-      flex: 0,
-      alignItems:"center",
       
+    },
+    inputregistro:{
+      flex: 1,
+      backgroundColor: "black",
+      borderWidth: 1,
+      borderBottomColor: "white",
+      color: "white",
+      margin: 10,
+      textAlign: 'center',
+      fontSize: 20,
+      marginTop: 10,
+    },
+    tituloregistro:{
+      textAlign: 'center',
+      flex: 1,
+      color: "white",
+      fontSize: 25,
+      marginBottom: 35,
+      margin: 10,
+    },
+    btnregistro :{
+      flex: 1,
+      marginTop: 35,
+      borderRadius: 50,
+      padding: 10,
+      margin: 10,
+      backgroundColor: "white",
+      alignItems: 'center' ,
+    },
+    pickerregistro:{
+      flex: 0.5,
+      marginTop: 20,
+      borderRadius: 50,
+      padding: 10,
+      backgroundColor: "black",
+      borderColor: "white",
+      color: "white",
+      alignContent: 'center'
     },
     fondoOk:{
       flex: 1,
@@ -130,6 +161,22 @@ const styles = StyleSheet.create({
     iconWhite:{
       color: "white",
     },
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040'
+    },
+    activityIndicatorWrapper: {
+      backgroundColor: '#FFFFFF',
+      height: 100,
+      width: 100,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    }
 
   });
 

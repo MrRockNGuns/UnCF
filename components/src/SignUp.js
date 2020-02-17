@@ -93,94 +93,94 @@ export default class SignUp extends React.Component{
             this.state.errorMensaje &&
             this.showError()
           }
-          <ScrollView >
-          <Text style={styles.subtitulo}>Completa los Campos</Text>
-          <TextInput 
-            style={styles.Input} 
-            placeholder="Nombre" 
-            placeholderTextColor="white" 
-            name="Nombre"
-            onChangeText={nombre => this.setState({nombre})}
-            value={this.state.nombre}
-          />
-          <TextInput 
-            style={styles.Input} 
-            placeholder="Apellido"
-            placeholderTextColor="white" 
-            name="Apellido"
-            onChangeText={apellido => this.setState({apellido})}
-            value={this.state.apellido}
-          />
-          <Picker  style={styles.pickerStyle}
-            selectedValue={this.state.sexo}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({sexo: itemValue})
-            }
-          > 
-            <Picker.Item  key="0" label="Indique genero.." value={0} />
-            <Picker.Item  key="1" label="Masculino" value="M" />
-            <Picker.Item  key="2" label="Femenino" value="F"  />
-          </Picker>
-
-          <TextInput
-              style={styles.Input} placeholder="Contraseña"
-              secureTextEntry={true}
-              placeholderTextColor="white"
-              name="pass"  
-              onChangeText={pass => this.setState({pass})}
-              value={this.state.pass}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Repetir Contraseña"
-              secureTextEntry={true}
-              placeholderTextColor="white"
-              name="passv"
-              onChangeText={passv => this.setState({passv})}
-              value={this.state.passv}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Teléfono"
-              placeholderTextColor="white"
-              name="cel"
-              onChangeText={tel => this.setState({tel})}
-              value={this.state.tel}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Email"
-              placeholderTextColor="white"
-              name="email"  
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Prestador de Salud"
-              placeholderTextColor="white"
-              name="salud"
-              onChangeText={salud => this.setState({salud})}
-              value={this.state.salud}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Lesion, molestia."
-              placeholderTextColor="white"
-              name="obs" 
-              onChangeText={obs => this.setState({obs})}
-              value={this.state.obs}
-          />
-          <TextInput
-              style={styles.Input} placeholder="Código de Cliente"
-              placeholderTextColor="white"
-              name="cod" 
-              onChangeText={cod => this.setState({cod})}
-              value={this.state.cod}
-          />
-          <TouchableOpacity
-              style={styles.BtnStyle}
-              onPress = {
-                  ()=> this.handleSignUp()
+          <ScrollView>
+            <Text style={styles.tituloregistro}>Completa los Campos</Text>
+            <TextInput 
+              style={styles.inputregistro} 
+              placeholder="Nombre" 
+              placeholderTextColor="white" 
+              name= "Nombre"
+              onChangeText={nombre => this.setState({nombre})}
+              value={this.state.nombre}
+            />
+            <TextInput 
+              style={styles.inputregistro} 
+              placeholder="Apellido"
+              placeholderTextColor="white" 
+              name="Apellido"
+              onChangeText={apellido => this.setState({apellido})}
+              value={this.state.apellido}
+            />
+            <Picker  style={styles.pickerregistro}
+              selectedValue={this.state.sexo}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({sexo: itemValue})
               }
-          >
-              <Text style={styles.textBtnStyle}>Registrate</Text>
-          </TouchableOpacity>
+            > 
+              <Picker.Item  key="0" label="Indique genero..." value={0} />
+              <Picker.Item  key="1" label="Masculino" value="M" />
+              <Picker.Item  key="2" label="Femenino" value="F"  />
+            </Picker>
+
+            <TextInput
+                style={styles.inputregistro} placeholder="Contraseña"
+                secureTextEntry={true}
+                placeholderTextColor="white"
+                name="pass"  
+                onChangeText={pass => this.setState({pass})}
+                value={this.state.pass}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Repetir Contraseña"
+                secureTextEntry={true}
+                placeholderTextColor="white"
+                name="passv"
+                onChangeText={passv => this.setState({passv})}
+                value={this.state.passv}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Teléfono"
+                placeholderTextColor="white"
+                name="cel"
+                onChangeText={tel => this.setState({tel})}
+                value={this.state.tel}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Email"
+                placeholderTextColor="white"
+                name="email"  
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Prestador de Salud"
+                placeholderTextColor="white"
+                name="salud"
+                onChangeText={salud => this.setState({salud})}
+                value={this.state.salud}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Lesion, molestia."
+                placeholderTextColor="white"
+                name="obs" 
+                onChangeText={obs => this.setState({obs})}
+                value={this.state.obs}
+            />
+            <TextInput
+                style={styles.inputregistro} placeholder="Código de Cliente"
+                placeholderTextColor="white"
+                name="cod" 
+                onChangeText={cod => this.setState({cod})}
+                value={this.state.cod}
+            />
+            <TouchableOpacity
+                style={styles.btnregistro}
+                onPress = {
+                    ()=> this.handleSignUp()
+                }
+            >
+                <Text style={styles.textBtnStyle}>Registrate</Text>
+            </TouchableOpacity>
           </ScrollView>
           </SafeAreaView>
     )
