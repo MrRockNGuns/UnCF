@@ -15,6 +15,8 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
+import ModalView from 'UniversoCF/components/src/Modal'
+
 export default class SignUp extends React.Component{
   static navigationOptions = {
     title: 'Registrarse',
@@ -32,7 +34,8 @@ export default class SignUp extends React.Component{
     nivel: '1',
     tel: '',
     cod: '',
-    errorMensaje: null
+    errorMensaje: null,
+    modalVisible: false
   }
 
   showError = () =>{
@@ -44,6 +47,7 @@ export default class SignUp extends React.Component{
   handleSignUp = async () => {
     const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje} = this.state;
     if (pass === passv){
+      this.setModalVisible(true);
       if (cod === '22312'){
         try {
           await auth().createUserWithEmailAndPassword(email, pass)    
@@ -70,25 +74,35 @@ export default class SignUp extends React.Component{
             obs: obs,
             cod: cod
           })
+          this.setModalVisible(false);
+          this.props.navigation.navigate('RegistroScss')
           //Emitir Mensaje
         } catch (e) {
           console.error(e.message);
           this.setState({errorMensaje: e.message})
+          this.setModalVisible(false);
         }
       }
       else{
         console.log('Codigo no Valido');  
         this.setState({errorMensaje: 'Código no Valido'})
+        this.setModalVisible(false);
       }
     }
     else{
       console.log('Password Distintas');
       this.setState({errorMensaje: 'Password Distintas'})
+      this.setModalVisible(false);
     } 
   }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+    console.log('setModalVisible ' + this.state.modalVisible)
+}
   render(){
     return(
           <SafeAreaView style={styles.fondoscroll}> 
+          <ModalView visible={this.state.modalVisible} cerrar={()=> this.setModalVisible(false)} />
           {
             this.state.errorMensaje &&
             this.showError()

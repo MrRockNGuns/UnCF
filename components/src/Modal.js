@@ -1,25 +1,23 @@
 import React from 'react';
-import {View, Modal,Text,TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Modal,Text,TouchableHighlight, ActivityIndicator} from 'react-native';
 import {styles} from 'UniversoCF/components/styles/Styles';
 
 
 
-const ModalView = props =>{
-  const {
-    loading,
-    ...attributes
-  } = props;
+const ModalView = ({visible,cerrar}) => { 
+
   return(
     <Modal
       transparent={true}
       animationType={'none'}
-      visible={loading}
+      visible={visible}
       onRequestClose= {()=> {console.log('close Modal')}}>
 
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator 
-            animating={loading}/>
+            animating={visible}/>
+            
         </View>
       </View>
     </Modal>

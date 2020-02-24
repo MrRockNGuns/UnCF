@@ -6,23 +6,38 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import ModalView from 'UniversoCF/components/src/Modal';
+import ModalView from 'UniversoCF/components/src/Modal'
 
 //Importo los estilos Propios
 import {styles} from 'UniversoCF/components/styles/Styles';
 import { firebase } from '@react-native-firebase/auth';
- 
+
+
+
 export default class LogIn extends React.Component{
     static navigationOptions = {
         header: null,
     }
-    state = {email: '', password: '', errorMensaje: null,loading: false}    
-
-
+    state = {email: '', password: '', errorMensaje: null,loading: false,modalVisible: false,isLogged: true};
     componentDidMount = async () => {
-        // const {navigate} = this.props.navigation;
+            //console.log('Entro Verifico Usuario')
         await firebase.auth().onAuthStateChanged(usuario => {
-           this.props.navigation.navigate(usuario.emailVerified ? 'Main' : 'Login')
+            if (!usuario){
+                //console.log('no hay Usuario')
+                this.setState({isLogged: false})
+            }
+            else{
+                var Err2 = 'Usuario no Verificado';
+                //console.log('Si hay Usuario')
+                    if (usuario.emailVerified){
+                        this.props.navigation.navigate('Main')
+                    }
+                    else{
+                        var Err2 = 'Usuario no Verificado';
+                        this.setState({isLogged: false})
+                        this.setState({errorMensaje: Err2})
+                    }
+            } 
         })
     }
 
@@ -31,6 +46,16 @@ export default class LogIn extends React.Component{
         if (errorMensaje === '[auth/wrong-password] The password is invalid or the user does not have a password.'){
             return(
                  <Text style={{ color: 'red' }}>Contraseña Incorrecta</Text>
+            )
+        }
+        if (errorMensaje === '[auth/invalid-email] The email address is badly formatted.'){
+            return(
+                 <Text style={{ color: 'red' }}>El correo no tiene el formato correcto</Text>
+            )
+        }
+        if (errorMensaje === '[auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.'){
+            return(
+                 <Text style={{ color: 'red' }}>El usuario no exsiste</Text>
             )
         }
         else{
@@ -42,29 +67,44 @@ export default class LogIn extends React.Component{
     }
     handleLogin = async () => {
         const { email, password, errorMensaje,loading} = this.state;
-        
-        
-        if (email === '' || password === ''){
-            var Err = 'Usuario o Correo Vacio';
-            this.setState({errorMensaje: Err})
-            this.DisplayError();
-        }
-        else{
-            this.setState({loading: true});
-            this.setState({errorMensaje: null})
-            const login = await firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(result  => this.props.navigation.navigate(result ? 'Main' : errorMensaje = 'Usuario No verificado'), this.setState({loading: false}))
-            .catch(e => this.setState({errorMensaje: e.message}), this.setState({loading: false}))  
-        }       
-        {console.log(this.state.loading)}
+            if (email === '' || password === ''){
+                var Err = 'Usuario o Correo Vacio';  
+                this.setState({errorMensaje: Err})
+                this.DisplayError();
+            }
+            else{
+                this.setModalVisible(true)
+                //console.log('Verificando Usuario ')
+                var Err2 = 'Usuario no Verificado';
+                this.setState({errorMensaje: null})
+
+                await firebase.auth()
+                .signInWithEmailAndPassword(email.trim(), password)
+                .then(result  => {
+                    if(result.emailVerified){
+                        this.props.navigation.navigate('Main')
+                        this.setModalVisible(false)
+                    }
+                    else{
+                        this.setState({errorMensaje: Err2})
+                        this.setModalVisible(false)
+                    }
+                    
+                })
+                .catch(e => this.setState({errorMensaje: e.message}))
+                //console.log(this.state.errorMensaje)        
+            }       
+        this.setModalVisible(false);
+    }
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+        //console.log('setModalVisible ' + this.state.modalVisible)
     }
 
     render(){
         return(
             <View style={styles.fondo}>
-                  {console.log('Return ' + this.state.loading)}
+                <ModalView visible={this.state.modalVisible} cerrar={()=> this.setModalVisible(false)} />
                 <Text style={styles.titulo}>Universo CrossFit</Text>
                 <Text style={styles.logintxt}>Log In</Text>
                 <TextInput style={styles.Input} placeholder="Correo eléctronico" 
@@ -106,5 +146,3 @@ export default class LogIn extends React.Component{
         );   
     }
 }
-/**<ModalView
-                    loading={this.state.loading} /> */

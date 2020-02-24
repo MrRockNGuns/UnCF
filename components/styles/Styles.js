@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       flexDirection: 'column',
       justifyContent: 'space-around',
-      backgroundColor: '#00000040'
+      backgroundColor: 'black'
     },
     activityIndicatorWrapper: {
       backgroundColor: '#FFFFFF',

@@ -4,9 +4,11 @@ import {styles} from 'UniversoCF/components/styles/Styles';
 
 
 
-const UsuarioDatos = ({datatype}) =>{
+const UsuarioDatos = ({datatype,onCambio}) =>{
+
+  
   return(
-    <TextInput style={styles.Input}>{datatype}</TextInput>
+    <TextInput style={styles.Input} onChangeText={(datatype)=> onCambio()} value={datatype}/>
   )
 }
 

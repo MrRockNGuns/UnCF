@@ -16,7 +16,7 @@ export default class Main extends React.Component{
         });
     }
   render(){
-        const {currentUser}  = firebase.auth()
+       
         return(
             <View style={styles.fondo} >
                 <Text style={styles.titulo}>

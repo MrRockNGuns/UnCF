@@ -12,8 +12,8 @@ import Configuracion from 'UniversoCF/components/src/Configuracion';
 
 //Navegacion interna
 import EditarDatos    from 'UniversoCF/components/src/EditarDatos';
-import CrearCategoria from 'UniversoCF/components/src/CrearCategoria';
-
+import CrearNovedad from 'UniversoCF/components/src/CrearCategoria';
+import RegistroScss    from 'UniversoCF/components/src/RegistroScss';
 
 // Primer Menu principal
 const MainNavigator = createBottomTabNavigator(
@@ -56,7 +56,7 @@ const MainNavigator = createBottomTabNavigator(
 const ConfiguracionOpc = createStackNavigator(
   {
     EditarDatos: {screen:EditarDatos},
-    CrearCategoria: {screen: CrearCategoria},
+    CrearNovedad: {screen: CrearNovedad},
   },
   {
     initialRouteName: 'EditarDatos',
@@ -74,6 +74,7 @@ const LoginOpc = createStackNavigator(
   {
     Login:   {screen: LogIn},
     SignUp:  {screen: SignUp},
+    RegistroScss: {screen: RegistroScss}
   },
   {
     initialRouteName: 'Login',

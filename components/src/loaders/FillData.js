@@ -11,8 +11,8 @@ const FillData = () => {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const {currentUser} = firebase.auth();
-  const [nombre, setNombre] = useState()
-  const [apellido, setApellido] = useState()
+  const [nombre, setNombre] = useState('Cargando...')
+  const [apellido, setApellido] = useState('espere...')
   
   // obtiene los datos de la base una sola vez
   useEffect(() => {

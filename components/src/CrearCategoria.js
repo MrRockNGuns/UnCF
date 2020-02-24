@@ -7,13 +7,29 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 
-export default class EditarDatos extends React.Component{
-
+export default class CrearNovedad extends React.Component{
+    state = {Titulo: '', descripcion: ''}
     render(){
         return(  
             <View style={styles.fondo}>
-                <Text style={styles.titulo}>Crear Categoria</Text>
-                <DatosUsuario/>
+                <Text style={styles.titulo}>Crear Novedad</Text>
+
+                <TextInput style={styles.Input} placeholder="Titulo" 
+                    placeholderTextColor="white" 
+                    name="email"
+                    onChangeText={Titulo => this.setState({ Titulo })}
+                    value={this.state.Titulo}
+                    
+                />
+
+                <TextInput style={styles.Input} placeholder="Descripcion" 
+                    placeholderTextColor="white" 
+                    name="email"
+                    onChangeText={descripcion => this.setState({ descripcion })}
+                    value={this.state.descripcion}
+                    
+                />
+                
             </View>
         );
     }

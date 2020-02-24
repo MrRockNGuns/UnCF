@@ -13,24 +13,29 @@ import HighLevel from 'UniversoCF/components/src/loaders/highLevel';
 
 
 export default class Configuracion extends React.Component{ 
-    
+    state = {success: false,pressed: false} 
     displayModal = () => {
         console.log('quiero desplegar modal')
         return(
             <ModalView/>
         )
     }
-
-    
-
     signOutUser = async () => {
         try {
             await firebase.auth().signOut();
-            ()=> this.props.navigation.navigate('LogIn');
         } catch (e) {
             console.log(e);
         }
+        this.setState({success: true});
+        this.props.navigation.navigate(this.state.success? 'Login': 'Login')
     };
+    setPressed(value){
+        this.setState({pressed: value});
+
+        if(this.state.pressed === true){
+            this.props.navigation.navigate('CrearNovedad'); 
+        }
+    }
         
     render(){  
         
@@ -54,7 +59,7 @@ export default class Configuracion extends React.Component{
                 <TouchableOpacity
                     style={styles.BtnStyle}
                     onPress = { () => {
-                        this.signOutUser()      
+                        this.signOutUser()                      
                         }
                     }
                 >

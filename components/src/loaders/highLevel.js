@@ -12,7 +12,7 @@ import '@react-native-firebase/auth';
 
 
 
-highLevel = () => {
+highLevel = ({pantalla}) => {
     const [nivel, setNivel] = useState();
     const {currentUser} = firebase.auth();    
     const [loaded, setLoaded] = useState(false);
@@ -37,11 +37,10 @@ highLevel = () => {
             <TouchableOpacity
                 style={styles.BtnStyle}
                 onPress = { () => {
-                    this.props.navigation.navigate('CrearCategoria');
-                    
+                    pantalla()
                 }}
             >
-                <Text style={styles.textBtnStyle}>Publicar Categoria</Text>
+                <Text style={styles.textBtnStyle}>Publicar Novedad</Text>
             </TouchableOpacity>
         )
         

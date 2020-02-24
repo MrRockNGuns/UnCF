@@ -12,6 +12,7 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
+import ModalRutinas  from 'UniversoCF/components/src/ModalRutinas';
 
 // Defecto Español
 LocaleConfig.locales['es'] = {
@@ -23,9 +24,8 @@ LocaleConfig.locales['es'] = {
 
 LocaleConfig.defaultLocale = 'es';
 
-
 export default class Agenda extends React.Component{
-    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null} 
+    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null,modalVisible: false} 
     
     agendarClase = () => {
         const { fecha, hora, usuario } = this.state
@@ -59,12 +59,14 @@ export default class Agenda extends React.Component{
 
     showSuccess = () =>{
         const {successMensaje} = this.state;
-        // console.log(successMensaje)
         return(
             <Text style={styles.textoSuccess}>{successMensaje}</Text>
         )
     }
-
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    }
+    
     render(){
         return(
             <View style={styles.fondo} >
@@ -74,6 +76,13 @@ export default class Agenda extends React.Component{
                 {this.state.successMensaje &&
                     this.showSuccess()
                 }
+                    <ModalRutinas 
+                        mostrar={this.state.modalVisible} 
+                        dia={this.state.fecha} 
+                        hora={this.state.hora}
+                        cerrar={()=> this.setModalVisible(false)}
+                        errors={() => this.setState({errorMensaje: 'Debe indicar una Hora.'})} />
+                
 
                 <Text style={styles.titulo}>
                     Agenda
@@ -141,7 +150,7 @@ export default class Agenda extends React.Component{
                 <TouchableOpacity
                 style={styles.BtnStyleOp}
                 onPress = { () => {
-                        
+                    this.setModalVisible(true)
                 }
                 }
                 >
