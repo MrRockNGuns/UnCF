@@ -16,6 +16,25 @@ import CrearNovedad from 'UniversoCF/components/src/CrearCategoria';
 import RegistroScss    from 'UniversoCF/components/src/RegistroScss';
 
 // Primer Menu principal
+
+const ConfiguracionOpc = createStackNavigator(
+  {
+    Configuracion: {screen:Configuracion},
+    EditarDatos: {screen:EditarDatos},
+    CrearNovedad: {screen: CrearNovedad},
+  },
+  {
+    initialRouteName: 'Configuracion',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'black',
+        headerVisible: true,
+      },
+      headerTintColor: '#fff',
+    }
+  },
+)
+
 const MainNavigator = createBottomTabNavigator(
   { 
     Main:{screen: Main,
@@ -34,7 +53,7 @@ const MainNavigator = createBottomTabNavigator(
         )
       }
     },
-    Config:{screen: Configuracion,
+    Configuracion:{screen: ConfiguracionOpc,
       navigationOptions: {
         tabBarLabel: "Configuracion",
         tabBarIcon: () => (
@@ -53,22 +72,7 @@ const MainNavigator = createBottomTabNavigator(
   },
 );
 
-const ConfiguracionOpc = createStackNavigator(
-  {
-    EditarDatos: {screen:EditarDatos},
-    CrearNovedad: {screen: CrearNovedad},
-  },
-  {
-    initialRouteName: 'EditarDatos',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'black',
-        headerVisible: true,
-      },
-      headerTintColor: '#fff',
-    }
-  },
-)
+
 
 const LoginOpc = createStackNavigator(
   {

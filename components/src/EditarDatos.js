@@ -111,13 +111,6 @@ const EditarDatos = (props) => {
                 }>
                 <Text style={styles.textBtnStyle}>Editar Datos</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.BtnStyle}
-                onPress={()=> props.navigation.navigate('Main')}
-                >
-                <Text style={styles.textBtnStyle}>Volver</Text>
-            </TouchableOpacity>
         </View>
     )
 }

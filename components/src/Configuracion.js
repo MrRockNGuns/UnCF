@@ -13,7 +13,7 @@ import HighLevel from 'UniversoCF/components/src/loaders/highLevel';
 
 
 export default class Configuracion extends React.Component{ 
-    state = {success: false,pressed: false} 
+    state = {success: false,pressed: true} 
     displayModal = () => {
         console.log('quiero desplegar modal')
         return(
@@ -31,8 +31,8 @@ export default class Configuracion extends React.Component{
     };
     setPressed(value){
         this.setState({pressed: value});
-
-        if(this.state.pressed === true){
+        console.log('Valor SetPress' + this.state.pressed)
+        if(this.state.pressed === value){
             this.props.navigation.navigate('CrearNovedad'); 
         }
     }
@@ -45,7 +45,7 @@ export default class Configuracion extends React.Component{
                     Configuracion
                 </Text>
 
-                <HighLevel/>
+                <HighLevel pantalla={()=> this.setPressed(true)} />
 
                 <TouchableOpacity
                     style={styles.BtnStyle}
