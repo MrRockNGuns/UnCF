@@ -9,11 +9,14 @@ import SignUp        from './components/src/SignUp';
 import Main          from 'UniversoCF/components/src/Main';
 import Agenda        from 'UniversoCF/components/src/Agenda';
 import Configuracion from 'UniversoCF/components/src/Configuracion';
+import MiPerfil      from 'UniversoCF/components/src/MiPerfil';
+import MiPerfilView  from 'UniversoCF/components/src/MiPerfilView';
 
 //Navegacion interna
 import EditarDatos    from 'UniversoCF/components/src/EditarDatos';
 import CrearNovedad from 'UniversoCF/components/src/CrearCategoria';
 import RegistroScss    from 'UniversoCF/components/src/RegistroScss';
+
 
 // Primer Menu principal
 
@@ -29,6 +32,41 @@ const ConfiguracionOpc = createStackNavigator(
       headerStyle: {
         backgroundColor: 'black',
         headerVisible: true,
+      },
+      headerTintColor: '#fff',
+    }
+  },
+)
+
+
+const Perfiles = createStackNavigator(
+  {
+    MiPerfil: {screen:MiPerfil},
+    MiPerfilView: {screen:MiPerfilView},
+  },
+  {
+    initialRouteName: 'MiPerfilView',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'black',
+        headerVisible: true,
+      },
+      headerTintColor: '#fff',
+    }
+  },
+)
+
+const LoginOpc = createStackNavigator(
+  {
+    Login:   {screen: LogIn},
+    SignUp:  {screen: SignUp},
+    RegistroScss: {screen: RegistroScss}
+  },
+  {
+    initialRouteName: 'Login',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'black',
       },
       headerTintColor: '#fff',
     }
@@ -53,6 +91,15 @@ const MainNavigator = createBottomTabNavigator(
         )
       }
     },
+    MiPerfil:{screen: Perfiles,
+      navigationOptions: {
+        tabBarLabel: "Mi Perfil",
+        tabBarIcon: () => (
+          <Icon color="white" name="user" type="font-awesome" />
+        )
+      }
+      
+    },
     Configuracion:{screen: ConfiguracionOpc,
       navigationOptions: {
         tabBarLabel: "Configuracion",
@@ -73,23 +120,6 @@ const MainNavigator = createBottomTabNavigator(
 );
 
 
-
-const LoginOpc = createStackNavigator(
-  {
-    Login:   {screen: LogIn},
-    SignUp:  {screen: SignUp},
-    RegistroScss: {screen: RegistroScss}
-  },
-  {
-    initialRouteName: 'Login',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'black',
-      },
-      headerTintColor: '#fff',
-    }
-  },
-)
 
 // Navegacion para LogIn se coloca MainNavigator para luego poder llamarLos objetos correctamente
 const HiddenNavigator = createSwitchNavigator(
