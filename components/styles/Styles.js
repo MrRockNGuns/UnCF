@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
       alignItems:"center",
       backgroundColor: "black",
     },
+    fondoperfil:{
+      alignItems:"center",
+      flexDirection: 'row',
+      backgroundColor: "black",
+      marginBottom: 10,
+    },
     fondoscroll:{
       backgroundColor: "black",
       
@@ -60,6 +66,13 @@ const styles = StyleSheet.create({
       fontSize: 40,
       marginBottom: 20,
     },
+    minitext: {
+      color: "white",
+      fontSize: 13,
+      marginBottom: 1,
+      marginLeft: 1,
+      justifyContent: "flex-end"
+    },
     subtitulo: {
       color: "white",
       fontSize: 25,
@@ -98,6 +111,15 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderBottomColor: "white",
       marginTop: 10,
+      color: "white",
+    },
+    InputPerfil:{
+      backgroundColor: "black",
+      height:40,
+      padding:1,
+      width: '20%',
+      borderWidth: 1,
+      borderBottomColor: "white",
       color: "white",
     },
     BtnStyle:{

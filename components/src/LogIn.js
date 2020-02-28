@@ -106,7 +106,7 @@ export default class LogIn extends React.Component{
             <View style={styles.fondo}>
                 <ModalView visible={this.state.modalVisible} cerrar={()=> this.setModalVisible(false)} />
                 <Text style={styles.titulo}>Universo CrossFit</Text>
-                <Text style={styles.logintxt}>Log In</Text>
+                <Text style={styles.logintxt}>LOG IN</Text>
                 <TextInput style={styles.Input} placeholder="Correo eléctronico" 
                     placeholderTextColor="white" 
                     name="email"
@@ -131,7 +131,7 @@ export default class LogIn extends React.Component{
                         this.handleLogin()
                     }
                 >
-                    <Text style={styles.textBtnStyle}>Log In</Text>
+                    <Text style={styles.textBtnStyle}>Iniciar Sesión</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
