@@ -4,6 +4,8 @@ import {
     Text,
     Picker,
     TouchableOpacity,
+    TextInput,
+    ScrollView
 } from 'react-native';
 
 import {styles}  from 'UniversoCF/components/styles/Styles';
@@ -24,53 +26,30 @@ LocaleConfig.locales['es'] = {
 
 LocaleConfig.defaultLocale = 'es';
 
-export default class Agenda extends React.Component{
-    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null,modalVisible: false, limite: 0} 
+export default class CrearRutinas extends React.Component{
+    static navigationOptions = {
+        title: 'Registrar Rutina',
+      };
+    state = {fecha: '', hora: '',descripcion: '',errorMensaje: null,successMensaje: null,modalVisible: false} 
     
-    componentDidMount = async  () => {
-        firebase.database().ref(`/tope/`).once('value',
-        val => {
-            var Lim = val.val()               
-            this.setState({limite: Lim.Cap})
-        }
-        )
-    }
-
-    verificarDisp = () => {
-        const { fecha, hora  } = this.state
-        const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
-
-        referencia.once('value', value => {
-            var Cnt = value.val('uid')
-            console.log(Cnt)
-        })
-    }
-        
-
     agendarClase = () => {
-        const { fecha, hora  } = this.state
+        const { fecha, hora, descripcion } = this.state
         const {currentUser}  = firebase.auth()
-        const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
+        const referencia = firebase.database().ref(`/rutinas/${fecha}/${hora}/`);
         const Id = currentUser.uid
         
-        // console.log('Id ' + Id)
-        // console.log('Uid ' + currentUser.uid)
-        // console.log('hora ' + hora)
         
-        if(hora == null || hora == null){
+        if(hora == 0 || hora == null){
             this.setState({errorMensaje: 'Debe indicar una Hora.'})
         }
         else{
-            this.verificarDisp();
-            console.log(this.state.limite)
-
-            referencia.child(Id).set({
-                usuario: currentUser.email,
+            referencia.set({
+                Desc: descripcion
                 
             })
-            this.setState({successMensaje: 'Agendado Correctamente'})
+            this.setState({successMensaje: 'Rutina Agregada'})
         }
-        //No hago nada
+        
     }
 
     showError =() =>{
@@ -92,24 +71,18 @@ export default class Agenda extends React.Component{
     
     render(){
         return(
-            
             <View style={styles.fondo} >
+                <ScrollView>
                 {this.state.errorMensaje &&
                     this.showError()
                 }
                 {this.state.successMensaje &&
                     this.showSuccess()
                 }
-                    <ModalRutinas 
-                        mostrar={this.state.modalVisible} 
-                        dia={this.state.fecha} 
-                        hora={this.state.hora}
-                        cerrar={()=> this.setModalVisible(false)}
-                        errors={() => this.setState({errorMensaje: 'Debe indicar una Hora.'})} />
-                
+                    
 
                 <Text style={styles.titulo}>
-                    Agenda
+                    Crear Rutinas
                 </Text>
                 <Calendar
                     horizontal={true}
@@ -171,15 +144,16 @@ export default class Agenda extends React.Component{
                     <Picker.Item label="21:00 22:00" value="21:00 22:00" />
                 </Picker>
 
-                <TouchableOpacity
-                style={styles.BtnStyleOp}
-                onPress = { () => {
-                    this.setModalVisible(true)
-                }
-                }
-                >
-                    <Text style={styles.textBtnStyleOp}>Rutinas para el dia</Text>
-                </TouchableOpacity>               
+                <TextInput 
+                    style={styles.textArea}
+                    placeholder="Describe los Ejercicios" 
+                    placeholderTextColor="white" 
+                    name="descripcion"
+                    onChangeText={descripcion => this.setState({ descripcion })}
+                    value={this.state.descripcion}
+                    numberOfLines={10}
+                    multiline={true}
+                />
                 
                 <TouchableOpacity
                     style={styles.BtnStyle}
@@ -189,8 +163,9 @@ export default class Agenda extends React.Component{
                         }
                     }
                 >
-                    <Text style={styles.textBtnStyle}>Agendar Clase</Text>
-                </TouchableOpacity>               
+                    <Text style={styles.textBtnStyle}>Crear Rutina</Text>
+                </TouchableOpacity>   
+                </ScrollView>            
             </View>
         );
     }

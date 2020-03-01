@@ -20,27 +20,31 @@ export default class LogIn extends React.Component{
     }
     state = {email: '', password: '', errorMensaje: null,loading: false,modalVisible: false,isLogged: true};
     componentDidMount = async () => {
-            //console.log('Entro Verifico Usuario')
+        console.log('LOGIN - Entro Verifico Usuario')
         await firebase.auth().onAuthStateChanged(usuario => {
             if (!usuario){
-                //console.log('no hay Usuario')
+                console.log('LOGIN - no hay Usuario')
                 this.setState({isLogged: false})
             }
             else{
                 var Err2 = 'Usuario no Verificado';
-                //console.log('Si hay Usuario')
+                console.log('LOGIN - Si hay Usuario')
+                
                     if (usuario.emailVerified){
                         this.props.navigation.navigate('Main')
                     }
                     else{
+                        console.log('LOGIN - Usuario NO Verificado')
                         var Err2 = 'Usuario no Verificado';
                         this.setState({isLogged: false})
                         this.setState({errorMensaje: Err2})
                     }
             } 
         })
+        
     }
-
+    
+        
     DisplayError =  () => {
         const {errorMensaje} = this.state;
         if (errorMensaje === '[auth/wrong-password] The password is invalid or the user does not have a password.'){
@@ -74,7 +78,7 @@ export default class LogIn extends React.Component{
             }
             else{
                 this.setModalVisible(true)
-                //console.log('Verificando Usuario ')
+                console.log('LOGIN - Verificando Usuario ')
                 var Err2 = 'Usuario no Verificado';
                 this.setState({errorMensaje: null})
 
@@ -82,10 +86,12 @@ export default class LogIn extends React.Component{
                 .signInWithEmailAndPassword(email.trim(), password)
                 .then(result  => {
                     if(result.emailVerified){
+                        console.log('LOGIN - Email Verificado ')
                         this.props.navigation.navigate('Main')
                         this.setModalVisible(false)
                     }
                     else{
+                        console.log('LOGIN - Email NO Verificado ')
                         this.setState({errorMensaje: Err2})
                         this.setModalVisible(false)
                     }

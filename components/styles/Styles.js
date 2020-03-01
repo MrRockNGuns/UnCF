@@ -190,6 +190,15 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       backgroundColor: 'black'
     },
+    activityIndicatorWrapper2: {
+      backgroundColor: '#FFFFFF',
+      height: 350,
+      width: '100%',
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    },
     activityIndicatorWrapper: {
       backgroundColor: '#FFFFFF',
       height: 100,
@@ -198,8 +207,14 @@ const styles = StyleSheet.create({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-around'
+    },
+    textArea: {
+      height: 150,
+      justifyContent: "flex-start",
+      borderWidth: 1,
+      borderColor: 'white',
+      color: "white",
     }
-
   });
 
   export  {styles};

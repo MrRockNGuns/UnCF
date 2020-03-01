@@ -12,7 +12,7 @@ import '@react-native-firebase/auth';
 
 
 
-highLevel = ({pantalla}) => {
+highLevel = ({pantalla,texto}) => {
     const [nivel, setNivel] = useState();
     const {currentUser} = firebase.auth();    
     const [loaded, setLoaded] = useState(false);
@@ -40,7 +40,7 @@ highLevel = ({pantalla}) => {
                     pantalla()
                 }}
             >
-                <Text style={styles.textBtnStyle}>Publicar Novedad</Text>
+                <Text style={styles.textBtnStyle}> {texto} </Text>
             </TouchableOpacity>
         )
         

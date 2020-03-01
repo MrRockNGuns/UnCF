@@ -35,7 +35,8 @@ export default class SignUp extends React.Component{
     tel: '',
     cod: '',
     errorMensaje: null,
-    modalVisible: false
+    modalVisible: false,
+    errors: false,
   }
 
   showError = () =>{
@@ -45,37 +46,67 @@ export default class SignUp extends React.Component{
         );
   }
   handleSignUp = async () => {
-    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje} = this.state;
+    console.log('-------------------------------------------------------------')
+    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje,errors} = this.state;
     if (pass === passv){
       this.setModalVisible(true);
       if (cod === '22312'){
         try {
-          await auth().createUserWithEmailAndPassword(email, pass)    
-          
-          firebase.auth().currentUser.sendEmailVerification().then(function(){
-              //console.log('Email Enviado')
+           await auth().createUserWithEmailAndPassword(email, pass).catch(
+            e => {
+              console.error('SIGNUP - Hubo Error Creando Usuario')
+              console.log(e.message)
+              this.setState({errors: true});
+            }
+          )  
+          if (this.state.errors === false){
+            //si es exitoso Grabo
+            console.log('SIGNUP - GRABANDO DATOS ADICIONALES ')
+            const {currentUser}  = firebase.auth()
+            const referencia = firebase.database().ref(`/usuarios/`);
+            console.log(currentUser.uid)
+            referencia.child(currentUser.uid).set({
+              email: currentUser.email,
+              nombre: nombre,
+              apellido: apellido,
+              tel: tel,
+              nivel: nivel,
+              salud: salud,
+              sexo: sexo,
+              obs: obs,
+              cod: cod
+            }).catch(
+              e => {
+                console.log('SIGNUP - Hubo Error En Datos Adicionales Usuario')
+                console.log(e.message)
+                this.setState({errors: true});
+              }
+            )
+          }
+          if (this.state.errors === false){
+            firebase.auth().currentUser.sendEmailVerification().then(function(){
+              console.log('SIGNUP - Email Enviado')
             },
             function(error){
-              //console.log('Hubo un error')
+              console.log('SIGNUP - Verificar Email - Hubo un error')              
+              console.log(error)
             }
-          )
-          //si es exitoso Grabo
-          const {currentUser}  = firebase.auth()
-          const referencia = firebase.database().ref(`/usuarios/`);
-
-          referencia.child(currentUser.uid).set({
-            email: currentUser.email,
-            nombre: nombre,
-            apellido: apellido,
-            tel: tel,
-            nivel: nivel,
-            salud: salud,
-            sexo: sexo,
-            obs: obs,
-            cod: cod
-          })
-          this.setModalVisible(false);
-          this.props.navigation.navigate('RegistroScss')
+            ).catch(
+              e => {
+                console.log('SIGNUP - Hubo Error En EMAIL Verificacion Usuario')
+                console.log(e.message)
+                this.setState({errors: true});
+              }
+            )
+          }
+          
+          if (this.state.errors === false){
+          
+            this.setModalVisible(false),
+            firebase.auth().signOut(),
+            this.props.navigation.navigate('RegistroScss')  
+          
+          }
           //Emitir Mensaje
         } catch (e) {
           console.error(e.message);
@@ -93,11 +124,12 @@ export default class SignUp extends React.Component{
       console.log('Password Distintas');
       this.setState({errorMensaje: 'Password Distintas'})
       this.setModalVisible(false);
-    } 
+    }
+    console.log('-------------------------------------------------------------')
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
-    console.log('setModalVisible ' + this.state.modalVisible)
+    console.log('SIGNUP - setModalVisible ' + this.state.modalVisible)
 }
   render(){
     return(

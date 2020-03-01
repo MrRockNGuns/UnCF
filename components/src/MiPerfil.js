@@ -17,9 +17,6 @@ export default class MiPerfil extends React.Component{
         title: 'Actualizar Perfil',
       };
     state = {DeadLift: 0,CleanJerk: 0,BackSquat: 0,ShoulderPress: 0,Snatch: 0,FiveRun: 0,error: 0}
-    shouldComponentUpdate = async () => {
-
-    }
     Guardar = () =>{
         const {DeadLift,CleanJerk,BackSquat,ShoulderPress,Snatch,FiveRun} = this.state;
         const {currentUser} = firebase.auth()
@@ -43,7 +40,7 @@ export default class MiPerfil extends React.Component{
                     Perfil
                 </Text>
 
-                <Text style={styles.subtitulo}>
+                <Text style={styles.subtitulo}>    
                     Indica tus Records
                 </Text>
                 <View style={styles.fondoperfil}>

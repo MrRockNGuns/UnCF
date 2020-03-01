@@ -29,11 +29,19 @@ export default class Configuracion extends React.Component{
         this.setState({success: true});
         this.props.navigation.navigate(this.state.success? 'Login': 'Login')
     };
-    setPressed(value){
+    setNovedad(value){
         this.setState({pressed: value});
         console.log('Valor SetPress' + this.state.pressed)
         if(this.state.pressed === value){
             this.props.navigation.navigate('CrearNovedad'); 
+        }
+    }
+
+    setRutina(value){
+        this.setState({pressed: value});
+        console.log('Valor SetPress' + this.state.pressed)
+        if(this.state.pressed === value){
+            this.props.navigation.navigate('CrearRutinas'); 
         }
     }
         
@@ -45,7 +53,10 @@ export default class Configuracion extends React.Component{
                     Configuracion
                 </Text>
 
-                <HighLevel pantalla={()=> this.setPressed(true)} />
+                <HighLevel texto={'Publicar Novedad'} pantalla={()=> this.setNovedad(true)} />
+
+                <HighLevel texto={'Crear Rutina'} pantalla={()=> this.setRutina(true)} />
+
 
                 <TouchableOpacity
                     style={styles.BtnStyle}
