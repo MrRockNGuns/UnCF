@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {styles} from 'UniversoCF/components/styles/Styles';
-import  auth  from '@react-native-firebase/auth';
+
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
@@ -52,7 +52,7 @@ export default class SignUp extends React.Component{
       this.setModalVisible(true);
       if (cod === '22312'){
         try {
-           await auth().createUserWithEmailAndPassword(email, pass).catch(
+           await firebase.auth().createUserWithEmailAndPassword(email, pass).catch(
             e => {
               console.error('SIGNUP - Hubo Error Creando Usuario')
               console.log(e.message)
