@@ -18,31 +18,29 @@ export default class LogIn extends React.Component{
     static navigationOptions = {
         header: null,
     }
-    state = {email: '', password: '', errorMensaje: null,loading: false,modalVisible: false,isLogged: true};
+    state = {email: '', password: '', errorMensaje: null,loading: false,modalVisible: false,usr: []};
     componentDidMount = async () => {
-        console.log('LOGIN - Entro Verifico Usuario')
+        
         await firebase.auth().onAuthStateChanged(usuario => {
-            if (!usuario){
-                console.log('LOGIN - no hay Usuario')
-                this.setState({isLogged: false})
-            }
-            else{
+            if (usuario){
                 var Err2 = 'Usuario no Verificado';
                 console.log('LOGIN - Si hay Usuario')
-                
-                    if (usuario.emailVerified){
-                        this.props.navigation.navigate('Main')
-                    }
-                    else{
-                        console.log('LOGIN - Usuario NO Verificado')
-                        var Err2 = 'Usuario no Verificado';
-                        this.setState({isLogged: false})
-                        this.setState({errorMensaje: Err2})
-                    }
-            } 
+                this.setState({usr: usuario})
+                if (this.state.usr.emailVerified){
+                    this.props.navigation.navigate('Main')
+                }
+                else{
+                    // console.log('LOGIN - Usuario NO Verificado')
+                    var Err2 = 'Usuario no Verificado';
+                    // this.setState({errorMensaje: Err2})
+                }
+            }
         })
-        
     }
+    componentWillUnmount() {
+        this.setState({usr: []})
+    }
+
     
         
     DisplayError =  () => {
@@ -78,20 +76,21 @@ export default class LogIn extends React.Component{
             }
             else{
                 this.setModalVisible(true)
-                console.log('LOGIN - Verificando Usuario ')
+                
                 var Err2 = 'Usuario no Verificado';
                 this.setState({errorMensaje: null})
 
                 await firebase.auth()
                 .signInWithEmailAndPassword(email.trim(), password)
                 .then(result  => {
+                    
                     if(result.emailVerified){
-                        console.log('LOGIN - Email Verificado ')
+                    
                         this.props.navigation.navigate('Main')
                         this.setModalVisible(false)
                     }
                     else{
-                        console.log('LOGIN - Email NO Verificado ')
+                    
                         this.setState({errorMensaje: Err2})
                         this.setModalVisible(false)
                     }

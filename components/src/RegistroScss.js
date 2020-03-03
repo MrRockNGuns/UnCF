@@ -7,6 +7,9 @@ import {
 
 import {styles} from 'UniversoCF/components/styles/Styles';
 import { Icon } from 'react-native-elements';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/database';
+import '@react-native-firebase/auth';
 
 export default class RegistroScss extends React.Component{
     static navigationOptions = {
@@ -28,7 +31,8 @@ export default class RegistroScss extends React.Component{
                 <TouchableOpacity
                 style={styles.BtnStyle}
                 onPress = {
-                    ()=> this.props.navigation.navigate('Login')
+                    ()=> 
+                    this.props.navigation.navigate('Login')
                 }
                 >
                 <Text style={styles.textBtnStyle}>Volver</Text>

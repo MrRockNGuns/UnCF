@@ -37,6 +37,7 @@ export default class SignUp extends React.Component{
     errorMensaje: null,
     modalVisible: false,
     errors: false,
+    loaded: true,
   }
 
   showError = () =>{
@@ -47,15 +48,13 @@ export default class SignUp extends React.Component{
   }
   handleSignUp = async () => {
     console.log('-------------------------------------------------------------')
-    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje,errors} = this.state;
+    const {email,pass,passv,sexo,nombre,apellido,salud,obs,nivel,tel,cod,errorMensaje,errors,loaded} = this.state;
     if (pass === passv){
-      this.setModalVisible(true);
       if (cod === '22312'){
+        this.setModalVisible(true);  
         try {
            await firebase.auth().createUserWithEmailAndPassword(email, pass).catch(
             e => {
-              console.error('SIGNUP - Hubo Error Creando Usuario')
-              console.log(e.message)
               this.setState({errors: true});
             }
           )  
@@ -64,7 +63,7 @@ export default class SignUp extends React.Component{
             console.log('SIGNUP - GRABANDO DATOS ADICIONALES ')
             const {currentUser}  = firebase.auth()
             const referencia = firebase.database().ref(`/usuarios/`);
-            console.log(currentUser.uid)
+            
             referencia.child(currentUser.uid).set({
               email: currentUser.email,
               nombre: nombre,
@@ -75,38 +74,16 @@ export default class SignUp extends React.Component{
               sexo: sexo,
               obs: obs,
               cod: cod
-            }).catch(
-              e => {
-                console.log('SIGNUP - Hubo Error En Datos Adicionales Usuario')
-                console.log(e.message)
-                this.setState({errors: true});
-              }
-            )
-          }
-          if (this.state.errors === false){
-            firebase.auth().currentUser.sendEmailVerification().then(function(){
-              console.log('SIGNUP - Email Enviado')
-            },
-            function(error){
-              console.log('SIGNUP - Verificar Email - Hubo un error')              
-              console.log(error)
-            }
-            ).catch(
-              e => {
-                console.log('SIGNUP - Hubo Error En EMAIL Verificacion Usuario')
-                console.log(e.message)
-                this.setState({errors: true});
-              }
-            )
+            },onComplete = () => {
+              firebase.auth().currentUser.sendEmailVerification(),
+              this.setModalVisible(false),
+              firebase.auth().signOut(),
+              this.props.navigation.navigate('RegistroScss')  
+            })
           }
           
-          if (this.state.errors === false){
+
           
-            this.setModalVisible(false),
-            firebase.auth().signOut(),
-            this.props.navigation.navigate('RegistroScss')  
-          
-          }
           //Emitir Mensaje
         } catch (e) {
           console.error(e.message);
@@ -117,7 +94,7 @@ export default class SignUp extends React.Component{
       else{
         console.log('Codigo no Valido');  
         this.setState({errorMensaje: 'Código no Valido'})
-        this.setModalVisible(false);
+        
       }
     }
     else{
