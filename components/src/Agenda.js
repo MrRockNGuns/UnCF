@@ -13,6 +13,7 @@ import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
 import ModalRutinas  from 'UniversoCF/components/src/ModalRutinas';
+import ModalView from 'UniversoCF/components/src/Modal';
 
 // Defecto Español
 LocaleConfig.locales['es'] = {
@@ -25,7 +26,7 @@ LocaleConfig.locales['es'] = {
 LocaleConfig.defaultLocale = 'es';
 
 export default class Agenda extends React.Component{
-    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null,modalVisible: false, limite: 0} 
+    state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null,modalVisible: false, limite: 0,loading: false} 
     
     componentDidMount = async  () => {
         firebase.database().ref(`/tope/`).once('value',
@@ -48,7 +49,7 @@ export default class Agenda extends React.Component{
         
 
     agendarClase = () => {
-        const { fecha, hora  } = this.state
+        const { fecha, hora,loading } = this.state
         const {currentUser}  = firebase.auth()
         const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
         const Id = currentUser.uid
@@ -61,14 +62,17 @@ export default class Agenda extends React.Component{
             this.setState({errorMensaje: 'Debe indicar una Hora.'})
         }
         else{
+            this.setState({loading: true})
             this.verificarDisp();
             console.log(this.state.limite)
 
             referencia.child(Id).set({
                 usuario: currentUser.email,
-                
+            }, onComplete = () =>{
+                this.setState({loading: false})
+                this.setState({successMensaje: 'Agendado Correctamente'})
             })
-            this.setState({successMensaje: 'Agendado Correctamente'})
+            
         }
         //No hago nada
     }
@@ -94,6 +98,7 @@ export default class Agenda extends React.Component{
         return(
             
             <View style={styles.fondo} >
+                <ModalView visible={this.state.loading} />
                 {this.state.errorMensaje &&
                     this.showError()
                 }
@@ -114,6 +119,7 @@ export default class Agenda extends React.Component{
                 <Calendar
                     horizontal={true}
                     hideArrows={false}
+                    
                     onDayPress={
                         (day) => {                           
                             this.setState({fecha: day.dateString})

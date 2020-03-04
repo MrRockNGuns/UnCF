@@ -7,6 +7,7 @@ import {
 import {styles} from 'UniversoCF/components/styles/Styles';
 import { firebase } from '@react-native-firebase/auth';
 import FillData  from 'UniversoCF/components/src/loaders/FillData'; 
+import Novedades  from 'UniversoCF/components/src/loaders/Novedades'; 
 
 export default class Main extends React.Component{
     shouldComponentUpdate = async () => {
@@ -26,6 +27,7 @@ export default class Main extends React.Component{
                 <Text style={styles.subtitulo}>
                     Novedades
                 </Text>
+                <Novedades/>
             </View>
         );
     }

@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import ModalView from 'UniversoCF/components/src/Modal'
@@ -110,7 +111,12 @@ export default class LogIn extends React.Component{
         return(
             <View style={styles.fondo}>
                 <ModalView visible={this.state.modalVisible} cerrar={()=> this.setModalVisible(false)} />
-                <Text style={styles.titulo}>Universo CrossFit</Text>
+
+                <Image 
+                style={styles.logoimg}
+                source={require('UniversoCF/components/img/Logo.png')}/>
+
+                
                 <Text style={styles.logintxt}>LOG IN</Text>
                 <TextInput style={styles.Input} placeholder="Correo eléctronico" 
                     placeholderTextColor="white" 

@@ -82,8 +82,6 @@ export default class SignUp extends React.Component{
             })
           }
           
-
-          
           //Emitir Mensaje
         } catch (e) {
           console.error(e.message);

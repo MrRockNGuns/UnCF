@@ -214,7 +214,13 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'white',
       color: "white",
+    },
+    logoimg: {
+      height: 80,
+      width: 300,
+      marginBottom: 30,
     }
+    
   });
 
   export  {styles};
