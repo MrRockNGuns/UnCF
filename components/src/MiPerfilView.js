@@ -31,12 +31,14 @@ const MiPerfilView = (props) =>{
             referencia.once("value",snapshot => 
             {
             let data = snapshot.val();
-            setDeadLift(data.DeadLift);
-            setCleanJerk(data.CleanJerk);
-            setBackSquat(data.BackSquat);
-            setShoulderPress(data.ShoulderPress);
-            setSnatch(data.Snatch);
-            setFiveRun(data.FiveRun);
+            if (data){
+                setDeadLift(data.DeadLift);
+                setCleanJerk(data.CleanJerk);
+                setBackSquat(data.BackSquat);
+                setShoulderPress(data.ShoulderPress);
+                setSnatch(data.Snatch);
+                setFiveRun(data.FiveRun);
+            }
             setloaded(true);
             }
         )

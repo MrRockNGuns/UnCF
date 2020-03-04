@@ -23,7 +23,9 @@ const FillData = () => {
         .ref(`/novedades/${fullday}`)
         .once('value', snapshot => {
           let data = snapshot.val();
-          setNovedad(data.Descripcion);
+          if(data){
+            setNovedad(data.Descripcion);
+          }
           
         });
       setLoaded(true);

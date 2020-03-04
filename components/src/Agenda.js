@@ -31,7 +31,7 @@ export default class Agenda extends React.Component{
     componentDidMount = async  () => {
         firebase.database().ref(`/tope/`).once('value',
         val => {
-            var Lim = val.val()               
+            var Lim = val.val()
             this.setState({limite: Lim.Cap})
         }
         )
@@ -42,7 +42,7 @@ export default class Agenda extends React.Component{
         const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
 
         referencia.once('value', value => {
-            var Cnt = value.val('uid')
+            var Cnt = Cnt + 1
             console.log(Cnt)
         })
     }

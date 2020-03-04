@@ -25,7 +25,7 @@ export default class LogIn extends React.Component{
         await firebase.auth().onAuthStateChanged(usuario => {
             if (usuario){
                 var Err2 = 'Usuario no Verificado';
-                console.log('LOGIN - Si hay Usuario')
+                // console.log('LOGIN - Si hay Usuario')
                 this.setState({usr: usuario})
                 if (this.state.usr.emailVerified){
                     this.props.navigation.navigate('Main')
@@ -38,11 +38,6 @@ export default class LogIn extends React.Component{
             }
         })
     }
-    componentWillUnmount() {
-        this.setState({usr: []})
-    }
-
-    
         
     DisplayError =  () => {
         const {errorMensaje} = this.state;

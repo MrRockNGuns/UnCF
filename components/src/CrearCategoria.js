@@ -9,56 +9,55 @@ import '@react-native-firebase/auth';
 import ModalView from 'UniversoCF/components/src/Modal';
 
 export default class CrearNovedad extends React.Component{
+    state = {Titulo: '', descripcion: '', modalVisible: false, mensajeError: null ,mensajeScss: null}
+
     static navigationOptions = {
         title: 'Publicar Novedad',
-      };
-    state = {Titulo: '', descripcion: '', modalVisible: false,mensajeError: '' ,mensajeScss: ''}
+    };
 
-    Publicar = () =>{
+    Publicar = async () =>{
         const {Titulo,descripcion} = this.state;
-
         this.setModalVisible(true);
-        if(Titulo === '' || descripcion === ''){
-            this.setModalVisible(false);
+        this.setState({mensajeError: null})
+        this.setState({mensajeScss: null})
+        //console.log(Titulo + ' ' + descripcion)
+        if(Titulo == '' || descripcion == ''){
             this.setState({mensajeError: 'Debe completar todos los campos.'})
+            this.setModalVisible(false);
         }
         else{
+            // console.log('Lleno')
             var date  = new Date().getDate(); //Current Date
             var month = new Date().getMonth() + 1 ;
             var year  = new Date().getFullYear();
             var fullday = date.toString() + month.toString() + year.toString();
             const referencia = firebase.database().ref(`/novedades/`);
-            console.log(fullday)
+            // console.log(fullday)
             referencia.child(fullday).set({
                 Titulo: Titulo,
                 Descripcion: descripcion
-            }).catch(
-                e => this.setState({mensajeError: e.message})
-            )
-            this.setModalVisible(false);
-            this.setState({mensajeScss: 'Agregado Correctamente'})
+            }, onComplete = () =>{
+                this.setState({mensajeScss: 'Agregado Correctamente'})
+                this.setModalVisible(false);
+            })
         }
-        
     }
 
-
-    DisplayError =  () => {
-        const {errorMensaje} = this.state;
+    DisplayError = () => {
         return(
-            <Text style={{ color: 'red' }}>{errorMensaje}</Text>
+            <Text style={{ color: 'red' }}>{this.state.mensajeError}</Text>
         )
-        
     }
+
     DisplayCorrecto =  () => {
         const {mensajeScss} = this.state;
         return(
-            <Text style={{ color: 'green' }}>{mensajeScss}</Text>
+        <Text style={{ color: 'green' }}>{this.state.mensajeScss}</Text>
         )
     }
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
-        //console.log('setModalVisible ' + this.state.modalVisible)
     }
 
     render(){
@@ -67,11 +66,18 @@ export default class CrearNovedad extends React.Component{
 
                 <ModalView visible={this.state.modalVisible} cerrar={()=> this.setModalVisible(false)} />
 
+                {this.state.mensajeError &&
+                    this.DisplayError()
+                }
+                {this.state.mensajeScss &&
+                    this.DisplayCorrecto()
+                }
+
                 <Text style={styles.titulo}>Crear Novedad</Text>
 
                 <TextInput style={styles.Input} placeholder="Titulo" 
                     placeholderTextColor="white" 
-                    name="email"
+                    name="Titulo"
                     onChangeText={Titulo => this.setState({ Titulo })}
                     value={this.state.Titulo}
                     
@@ -79,7 +85,7 @@ export default class CrearNovedad extends React.Component{
 
                 <TextInput style={styles.Input} placeholder="Descripcion" 
                     placeholderTextColor="white" 
-                    name="email"
+                    name="descripcion"
                     onChangeText={descripcion => this.setState({ descripcion })}
                     value={this.state.descripcion}
                     
