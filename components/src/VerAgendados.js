@@ -12,8 +12,8 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import '@react-native-firebase/auth';
 
-import ModalRutinas  from 'UniversoCF/components/src/ModalRutinas';
-import ModalView from 'UniversoCF/components/src/Modal';
+import ModalAgendados  from 'UniversoCF/components/src/loaders/ModalAgendados';
+
 
 // Defecto Español
 LocaleConfig.locales['es'] = {
@@ -25,7 +25,10 @@ LocaleConfig.locales['es'] = {
 
 LocaleConfig.defaultLocale = 'es';
 
-export default class Agenda extends React.Component{
+export default class VerAgendados extends React.Component{
+    static navigationOptions = {
+        title: 'Agendados por Clase',
+      };
     state = {fecha: '', hora: '',usuario: '',errorMensaje: null,successMensaje: null,modalVisible: false, limite: 0,loading: false,ocupados: 0,completo: false} 
     
     componentDidMount = async  () => {
@@ -38,66 +41,6 @@ export default class Agenda extends React.Component{
         
     }
 
-
-    verificarDisp =  () => {
-        const { fecha, hora,completo  } = this.state
-        const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
-        
-        referencia.once('value', value => {
-            var items = value.val()
-            let count = 0
-            Object.values(items).map(
-                (i) => {
-                    count ++;
-                    this.contarPersonas(count)        
-                }
-            )
-            console.log('Completado')
-            this.setState({completo: true})
-            this.agendarClase() 
-        }) 
-    }
-
-    agendarClase =  () => {
-        console.log('Intento agendar')
-        const { fecha, hora,ocupados,limite } = this.state
-        const {currentUser}  = firebase.auth()
-        const referencia = firebase.database().ref(`/reservas/${fecha}/${hora}/`);
-        const Id = currentUser.uid
-        
-
-        if(hora == null || hora == null){
-            this.setState({errorMensaje: 'Debe indicar una Hora.'})
-        }
-        else{
-            this.setState({loading: true})
-
-            console.log('Limite: ' + this.state.limite)
-            console.log('Ocupados: ' + this.state.ocupados)
-            if (ocupados <= limite){
-                console.log('Sobran Lugares')
-                referencia.child(Id).set({
-                    usuario: currentUser.email,
-                }, onComplete = () =>{
-                    this.setState({loading: false})
-                    this.setState({successMensaje: 'Agendado Correctamente'})
-                })
-            }
-            else{
-                this.setState({loading: false})
-                this.setState({errorMensaje: 'No quedan Cupos para esta clase'})
-            }
-            
-            
-        }
-
-    }
-
-    contarPersonas = (valor) =>{
-        this.setState({ocupados:  valor })
-        console.log('Sumando Ocupados: ' + this.state.ocupados)
-    }
-
     showError =() =>{
         const {errorMensaje} = this.state;
         return(
@@ -105,12 +48,6 @@ export default class Agenda extends React.Component{
         );
     }
 
-    showSuccess = () =>{
-        const {successMensaje} = this.state;
-        return(
-            <Text style={styles.textoSuccess}>{successMensaje}</Text>
-        )
-    }
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
@@ -119,14 +56,14 @@ export default class Agenda extends React.Component{
         return(
             
             <View style={styles.fondo} >
-                <ModalView visible={this.state.loading} />
+                
                 {this.state.errorMensaje &&
                     this.showError()
                 }
                 {this.state.successMensaje &&
                     this.showSuccess()
                 }
-                    <ModalRutinas 
+                    <ModalAgendados 
                         mostrar={this.state.modalVisible} 
                         dia={this.state.fecha} 
                         hora={this.state.hora}
@@ -140,7 +77,6 @@ export default class Agenda extends React.Component{
                 <Calendar
                     horizontal={true}
                     hideArrows={false}
-                    
                     onDayPress={
                         (day) => {                           
                             this.setState({fecha: day.dateString})
@@ -197,26 +133,15 @@ export default class Agenda extends React.Component{
                     <Picker.Item label="20:00 21:00" value="20:00 21:00" />
                     <Picker.Item label="21:00 22:00" value="21:00 22:00" />
                 </Picker>
-
-                <TouchableOpacity
-                style={styles.BtnStyleOp}
-                onPress = { () => {
-                    this.setModalVisible(true)
-                }
-                }
-                >
-                    <Text style={styles.textBtnStyleOp}>Rutinas para el dia</Text>
-                </TouchableOpacity>               
                 
                 <TouchableOpacity
                     style={styles.BtnStyle}
                     onPress = { () => {
-                        this.state.hora != null && this.state.fecha != null ?
-                        this.verificarDisp() : console.log("Falta Datos")
+                        this.setModalVisible(true)
                         }
                     }
                 >
-                    <Text style={styles.textBtnStyle}>Agendar Clase</Text>
+                    <Text style={styles.textBtnStyle}>Ver agendados</Text>
                 </TouchableOpacity>               
             </View>
         );

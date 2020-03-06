@@ -12,12 +12,12 @@ import '@react-native-firebase/auth';
 
 const EditarDatos = (props) => {    
     
-    const [nombre, setNombre] = useState();
-    const [apellido, setApellido] = useState();
-    const [cel, setCel] = useState();
+    const [nombre, setNombre] = useState('nombre');
+    const [apellido, setApellido] = useState('apellido');
+    const [cel, setCel] = useState('teléfono');
     const [sexo, setSexo] = useState();
     const [obs, setObs] = useState();
-    const [salud, setSalud] = useState();
+    const [salud, setSalud] = useState('centro de salud');
     const [nivel, setNivel] = useState('1');
     const [cod, setCod] = useState('1');
     const [loaded, setLoaded] = useState(false);
@@ -37,7 +37,9 @@ const EditarDatos = (props) => {
                     setApellido(data.apellido);
                     setCel(data.tel);
                     setSexo(data.sexo);
-                    setObs(data.obs);
+                    if (data.obs && (data.obs != '')){
+                        setObs(data.obs);
+                    }
                     setSalud(data.salud);
                     setNivel(data.nivel);
                     setCod(data.cod);
@@ -90,7 +92,7 @@ const EditarDatos = (props) => {
             <TextInput style={styles.Input} onChangeText={(nombre) => setNombre(nombre)} value={nombre}/>
             <TextInput style={styles.Input} onChangeText={(apellido) => setApellido(apellido)} value={apellido}/>
             <TextInput style={styles.Input} onChangeText={(cel) => setCel(cel)} value={cel}/>
-            <TextInput style={styles.Input} onChangeText={(obs) => setObs(obs)} value={obs}/>
+            <TextInput style={styles.Input} placeholder="lesiones,(Molestias)"  onChangeText={(obs) => setObs(obs)} value={obs}/>
             <Picker
                 selectedValue={sexo}
                 style={styles.pickerStyle}
@@ -102,7 +104,7 @@ const EditarDatos = (props) => {
                     <Picker.Item label='Femenino' value='F' />
                     <Picker.Item label='Masculino' value='M' />
             </Picker>
-            <TextInput style={styles.Input} onChangeText={(salud) => setSalud(salud)} value={salud}/>
+            <TextInput style={styles.Input} placeholder={"Salud"} onChangeText={(salud) => setSalud(salud)} value={salud}/>
             <TouchableOpacity
                 style={styles.BtnStyle}
                 onPress = { () => {

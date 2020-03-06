@@ -14,9 +14,10 @@ import MiPerfilView  from 'UniversoCF/components/src/MiPerfilView';
 
 //Navegacion interna
 import EditarDatos    from 'UniversoCF/components/src/EditarDatos';
-import CrearNovedad from 'UniversoCF/components/src/CrearCategoria';
-import RegistroScss    from 'UniversoCF/components/src/RegistroScss';
+import CrearNovedad   from 'UniversoCF/components/src/CrearCategoria';
+import RegistroScss   from 'UniversoCF/components/src/RegistroScss';
 import CrearRutinas   from 'UniversoCF/components/src/CrearRutinas';
+import VerAgendados   from 'UniversoCF/components/src/VerAgendados';
 
 
 // Primer Menu principal
@@ -26,7 +27,8 @@ const ConfiguracionOpc = createStackNavigator(
     Configuracion: {screen:Configuracion},
     EditarDatos: {screen:EditarDatos},
     CrearNovedad: {screen: CrearNovedad},
-    CrearRutinas: {screen: CrearRutinas}
+    CrearRutinas: {screen: CrearRutinas},
+    VerAgendados: {screen: VerAgendados} 
   },
   {
     initialRouteName: 'Configuracion',

@@ -44,6 +44,14 @@ export default class Configuracion extends React.Component{
             this.props.navigation.navigate('CrearRutinas'); 
         }
     }
+
+    setAgendados(value){
+        this.setState({pressed: value});
+        console.log('Valor SetPress' + this.state.pressed)
+        if(this.state.pressed === value){
+            this.props.navigation.navigate('VerAgendados'); 
+        }
+    }
         
     render(){  
         
@@ -56,6 +64,8 @@ export default class Configuracion extends React.Component{
                 <HighLevel texto={'Publicar Novedad'} pantalla={()=> this.setNovedad(true)} />
 
                 <HighLevel texto={'Crear Rutina'} pantalla={()=> this.setRutina(true)} />
+
+                <HighLevel texto={'Ver Inscriptos por dia'} pantalla={()=> this.setAgendados(true)} />
 
 
                 <TouchableOpacity
